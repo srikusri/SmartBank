@@ -1,0 +1,17 @@
+{
+    "name": "SmartBank - Learn. Earn. Spend.",
+    "short_name": "SmartBank",
+    "description": "A fun digital banking simulator for kids.",
+    "start_url": "./",
+    "display": "standalone",
+    "background_color": "#f0f4f8",
+    "theme_color": "#4CAF50",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "vite.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ]
+}
