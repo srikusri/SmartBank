@@ -1,9 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import { useBank } from '../context/BankContext';
 import Navbar from '../components/Navbar';
 
 const Save = () => {
-    const { state, depositToSavings, withdrawFromSavings, updateBalance } = useBank();
+    const { state, depositToSavings, withdrawFromSavings, updateBalance, createFD, redeemFD } = useBank();
     const { user, balance, savings } = state;
     const [amount, setAmount] = useState('');
     const [mode, setMode] = useState('deposit'); // deposit or withdraw
@@ -60,7 +61,7 @@ const Save = () => {
                         <span>₹{user.goalAmount}</span>
                     </div>
                     <div style={{ width: '100%', height: '15px', background: '#eee', borderRadius: '10px', overflow: 'hidden' }}>
-                        <div style={{ width: `${goalProgress}%`, height: '100%', background: '#4CAF50', transition: 'width 0.5s ease' }}></div>
+                        <div style={{ width: `${goalProgress}% `, height: '100%', background: '#4CAF50', transition: 'width 0.5s ease' }}></div>
                     </div>
                     <p style={{ fontSize: '12px', color: '#888', marginTop: '5px' }}>{Math.round(goalProgress)}% Reached</p>
                 </div>
@@ -104,6 +105,49 @@ const Save = () => {
                         {mode === 'deposit' ? 'Save Money' : 'Withdraw Money'}
                     </button>
                 </form>
+            </div>
+
+            <div style={{ background: 'white', padding: '20px', borderRadius: '20px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)', marginTop: '20px' }}>
+                <h3 style={{ textAlign: 'center', color: '#1565C0' }}>Fixed Deposits (FD) 📜</h3>
+                <p style={{ textAlign: 'center', fontSize: '12px', color: '#666' }}>Lock money for 1 minute to earn 5% interest!</p>
+
+                <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+                    <button onClick={() => createFD(100, 1)} style={{ flex: 1, padding: '10px', background: '#673AB7', color: 'white', border: 'none', borderRadius: '10px' }}>
+                        Invest ₹100
+                    </button>
+                    <button onClick={() => createFD(500, 1)} style={{ flex: 1, padding: '10px', background: '#673AB7', color: 'white', border: 'none', borderRadius: '10px' }}>
+                        Invest ₹500
+                    </button>
+                </div>
+
+                <div>
+                    {state.fds && state.fds.length > 0 ? (
+                        state.fds.map(fd => {
+                            const isMatured = new Date() >= new Date(fd.maturityDate);
+                            return (
+                                <div key={fd.id} style={{ background: '#f5f5f5', padding: '10px', borderRadius: '10px', marginBottom: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', opacity: fd.isRedeemed ? 0.5 : 1 }}>
+                                    <div>
+                                        <div style={{ fontWeight: 'bold' }}>₹{fd.amount} FD</div>
+                                        <div style={{ fontSize: '12px', color: '#666' }}>
+                                            {fd.isRedeemed ? 'Redeemed' : (isMatured ? 'Matured! Ready to Redeem' : ` matures in ${Math.ceil((new Date(fd.maturityDate) - new Date()) / 1000)} s`)}
+                                        </div>
+                                    </div>
+                                    {!fd.isRedeemed && (
+                                        <button
+                                            onClick={() => redeemFD(fd.id)}
+                                            disabled={!isMatured}
+                                            style={{ background: isMatured ? '#4CAF50' : '#ccc', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: isMatured ? 'pointer' : 'not-allowed' }}
+                                        >
+                                            Redeem
+                                        </button>
+                                    )}
+                                </div>
+                            );
+                        })
+                    ) : (
+                        <p style={{ textAlign: 'center', color: '#999', fontSize: '12px' }}>No active FDs.</p>
+                    )}
+                </div>
             </div>
 
             <div style={{ marginTop: '20px', textAlign: 'center' }}>

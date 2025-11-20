@@ -32,8 +32,14 @@ const Header = () => {
                 </div>
                 <div style={{ textAlign: 'right' }}>
                     <p style={{ margin: 0, fontSize: '12px', opacity: 0.8 }}>{user.bankName}</p>
-                    <button onClick={resetApp} style={{ background: 'rgba(255,255,255,0.2)', border: 'none', color: 'white', padding: '5px 10px', borderRadius: '5px', fontSize: '10px', marginTop: '5px', cursor: 'pointer' }}>
+                    <button onClick={resetApp} style={{ background: 'rgba(255,255,255,0.2)', border: 'none', color: 'white', padding: '5px 10px', borderRadius: '5px', fontSize: '10px', marginTop: '5px', cursor: 'pointer', marginRight: '5px' }}>
                         Reset App
+                    </button>
+                    <button onClick={() => {
+                        const text = `I just earned ₹${balance.toFixed(0)} on SmartBank! 🏆 Check it out: https://github.com/srramamu/SmartBank`;
+                        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+                    }} style={{ background: '#25D366', border: 'none', color: 'white', padding: '5px 10px', borderRadius: '5px', fontSize: '10px', marginTop: '5px', cursor: 'pointer' }}>
+                        Share 📱
                     </button>
                 </div>
             </div>

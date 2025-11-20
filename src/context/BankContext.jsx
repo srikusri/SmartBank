@@ -18,6 +18,7 @@ const INITIAL_STATE = {
     user: null,
     balance: 0,
     savings: 0,
+    fds: [], // { id, amount, interestRate, durationMonths, maturityDate, isRedeemed }
     transactions: [],
     unlockedBadges: [],
     stats: {
@@ -127,6 +128,60 @@ export const BankProvider = ({ children }) => {
         })
     }
 
+    const createFD = (amount, durationMonths) => {
+        setState(prev => {
+            if (prev.balance < amount) return prev;
+
+            const interestRate = 0.05; // 5% flat for demo
+            const maturityDate = new Date(Date.now() + durationMonths * 60 * 1000).toISOString(); // 1 month = 1 minute for demo
+
+            const newFD = {
+                id: Date.now(),
+                amount,
+                interestRate,
+                durationMonths,
+                maturityDate,
+                isRedeemed: false
+            };
+
+            return {
+                ...prev,
+                balance: prev.balance - amount,
+                fds: [...(prev.fds || []), newFD],
+                transactions: [
+                    { id: Date.now(), type: 'debit', amount, description: `Opened FD for ${durationMonths} mins`, date: new Date().toISOString() },
+                    ...prev.transactions
+                ]
+            };
+        });
+    };
+
+    const redeemFD = (fdId) => {
+        setState(prev => {
+            const fd = prev.fds.find(f => f.id === fdId);
+            if (!fd || fd.isRedeemed) return prev;
+
+            const maturityTime = new Date(fd.maturityDate).getTime();
+            if (Date.now() < maturityTime) {
+                alert("FD has not matured yet!");
+                return prev;
+            }
+
+            const interest = fd.amount * fd.interestRate;
+            const totalAmount = fd.amount + interest;
+
+            return {
+                ...prev,
+                balance: prev.balance + totalAmount,
+                fds: prev.fds.map(f => f.id === fdId ? { ...f, isRedeemed: true } : f),
+                transactions: [
+                    { id: Date.now(), type: 'credit', amount: totalAmount, description: 'FD Maturity + Interest', date: new Date().toISOString() },
+                    ...prev.transactions
+                ]
+            };
+        });
+    };
+
     const resetApp = () => {
         if (window.confirm("Are you sure you want to reset everything? This cannot be undone.")) {
             clearStorage();
@@ -136,7 +191,7 @@ export const BankProvider = ({ children }) => {
     };
 
     return (
-        <BankContext.Provider value={{ state, login, updateBalance, depositToSavings, withdrawFromSavings, resetApp, loading }}>
+        <BankContext.Provider value={{ state, login, updateBalance, depositToSavings, withdrawFromSavings, createFD, redeemFD, resetApp, loading }}>
             {children}
         </BankContext.Provider>
     );

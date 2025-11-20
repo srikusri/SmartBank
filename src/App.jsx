@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { BankProvider, useBank } from './context/BankContext';
-import { Onboarding, Home, Earn, Save, Spend, Wallet, Learn } from './pages';
+import { Onboarding, Home, Earn, Save, Spend, Wallet, Learn, Passbook } from './pages';
 import Navbar from './components/Navbar';
 
 const ProtectedRoute = ({ children }) => {
@@ -22,6 +22,7 @@ const AppContent = () => {
         <Route path="/save" element={<ProtectedRoute><Save /></ProtectedRoute>} />
         <Route path="/spend" element={<ProtectedRoute><Spend /></ProtectedRoute>} />
         <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
+        <Route path="/passbook" element={<ProtectedRoute><Passbook /></ProtectedRoute>} />
         <Route path="/learn" element={<ProtectedRoute><Learn /></ProtectedRoute>} />
       </Routes>
       {state.user && <Navbar />}
