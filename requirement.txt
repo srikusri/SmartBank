@@ -1,0 +1,135 @@
+SmartBank
+🌟 Overall Concept
+
+Title: My Mini Bank — Learn. Earn. Spend. A fun digital banking simulator where kids:
+
+Open an account
+
+Earn virtual money through math challenges and quests
+
+Save, spend, and transfer using sound-based “digital payments”
+
+Learn concepts like balance, interest, savings goals, and UPI
+
+Everything is local — data stays in the browser. Each child’s “bank” lives on their device.
+
+🏦 Core Features (Kid-Friendly Banking Simulation)
+
+Account Opening
+Learning concept: KYC, basic banking terms, saving goals.
+
+Simple onboarding: choose avatar + name + goal (e.g., “Buy a bicycle: ₹500”)
+
+Kids fill a fun form: name, DOB, choose bank name (“Happy Bank”, “Smart Bank”)
+
+Generates:
+
+Account number (random 8 digits)
+
+UPI ID style (name@happybank)
+
+Initial ₹100 “welcome bonus”
+
+💡 Learning outcome: Kids understand how accounts and IDs work.
+
+Earning Money (Math & Quests)
+Learning concept: Work, earning, effort-reward.
+
+Kids earn virtual rupees by completing:
+
+Math mini-games:
+
+Quick addition/subtraction with decimals (bank deposits/withdrawals)
+
+Interest calculation puzzles
+
+Currency conversion (₹ → ₹ + paise)
+
+Daily Quests:
+
+“Calculate interest for 2 months at 5%”
+
+“Balance after spending ₹125 from ₹400?”
+
+💰 Each correct answer = +₹X into account 🎯 Each quest = gamified badge (Banker, Saver, Investor, etc.)
+
+Savings & Interest
+Learning concept: Compound interest, saving habits.
+
+A “Savings Goal Tracker” shows progress with a progress bar.
+
+Kids can “Deposit” money into Savings Vault for bonus interest (e.g., 2% weekly).
+
+Interest simulated with setTimeout or a time-based counter.
+
+💡 Learning outcome: Savings grow over time, interest explained visually.
+
+Spending & Payments
+Learning concept: Digital payments, budgeting, responsibility.
+
+A Mini Store (toys, snacks, books) lets kids “spend” their money.
+
+Each item has a cost → deducts balance → fun animation of “money flying.”
+
+Budget alerts (“Don’t spend all your savings!”).
+
+Digital Wallet + Transfers (Sound-Based 💸)
+Learning concept: UPI, secure transfer, transaction verification.
+
+Each device has:
+
+A Wallet QR + Sound Signature (unique encrypted tone)
+
+When sending money → device emits a short “beep pattern”
+
+Receiving device listens via UserMedia API (mic) → decodes tone → confirms transfer locally.
+
+🔐 No backend — transactions are stored locally (IndexedDB or localStorage).
+
+💡 Learning outcome: Understanding of digital money transfer and trust systems.
+
+🎮 Gamification Layer Task Type Example Reward Learning Math Challenge “Calculate 10% of ₹250” ₹25 Interest, percentages Mission “Save ₹1000 in 7 days” Gold badge Goal setting Payment Quest “Send ₹50 to your friend” ₹10 cashback UPI simulation Quiz “Which is safer: PIN or password?” ₹5 Cybersecurity
+
+Add a “Bank Rank” leaderboard (local only) — “Rising Banker”, “Smart Saver”, etc.
+
+🧠 Educational Alignment Concept Activity Skill Built Interest Savings vault grows visually Percentage & time math Budgeting Store & balance tracker Decision-making Digital payments Sound transfer simulation Tech awareness Security PIN input, transaction OTP Safety habits Goal setting Save for rewards Long-term planning 💻 Technical Architecture (SPA, No Backend) Component Description Angular SPA All pages in a single app (no backend) LocalStorage / IndexedDB Store accounts, transactions, goals UserMedia (Web Audio API) Encode/Decode short audio chirps for transfers Service Workers Offline play, caching assets Animations (Lottie/GSAP) Smooth coin movement, interest growth Routing /home, /earn, /wallet, /store 🎨 UX / UI Ideas (Fun & Kid-Friendly) Visual Style:
+
+Cartoon bank lobby theme
+
+Characters: friendly “Bank Bot” assistant
+
+Bright Indian color palette: saffron, turquoise, teal
+
+Coin animations & rupee rain for rewards
+
+UPI-like interface for transfers
+
+Navigation:
+
+Bottom bar like an app: 🏦 Home | 🎯 Quests | 💰 Wallet | 🎓 Learn | 🛍️ Store
+
+Example Flow:
+
+👦 “Hi, I’m Riya. I want to open a bank account.” ✨ “Welcome to Happy Bank! Let’s create your first goal.” 🎮 “Play a math challenge to earn your first ₹50!” 🔊 “Now, send ₹10 to your friend’s wallet using sound transfer!”
+
+🧩 Add-On Modules (Future Extensions)
+
+🧑‍🤝‍🧑 Multiplayer Mode: Peer-to-peer sound UPI transfer
+
+🎁 Mini-Festivals: “Diwali Bonus”, “Children’s Day Offers”
+
+📚 Financial Literacy Lessons: Built-in “learn & quiz” cards
+
+🪙 Virtual Bank Branch: AR view with teller counters & ATMs
+
+🌈 Outcomes
+
+By the end, kids will:
+
+Understand core banking principles
+
+Be comfortable with saving and digital payments
+
+Strengthen math & logic skills
+
+Experience financial decision-making in a safe sandbox

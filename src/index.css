@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&display=swap');
+
+:root {
+  --font-family: 'Fredoka', sans-serif;
+  --primary-color: #4CAF50;
+  --secondary-color: #FF9800;
+  --bg-color: #f0f4f8;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: #333;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  font-family: var(--font-family);
+  transition: transform 0.1s ease;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+input, select {
+  font-family: var(--font-family);
+}
+
+/* Animation for listening pulse */
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.listening-pulse {
+  animation: pulse 1.5s infinite;
+}
+
+/* Mobile responsiveness helpers */
+.app-container {
+  max-width: 480px; /* Mobile width simulation on desktop */
+  margin: 0 auto;
+  background: white;
+  min-height: 100vh;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+@media (max-width: 480px) {
+  .app-container {
+    box-shadow: none;
+  }
+}

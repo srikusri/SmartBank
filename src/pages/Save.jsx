@@ -1,0 +1,120 @@
+import React, { useState, useEffect } from 'react';
+import { useBank } from '../context/BankContext';
+import Navbar from '../components/Navbar';
+
+const Save = () => {
+    const { state, depositToSavings, withdrawFromSavings, updateBalance } = useBank();
+    const { user, balance, savings } = state;
+    const [amount, setAmount] = useState('');
+    const [mode, setMode] = useState('deposit'); // deposit or withdraw
+
+    const goalProgress = Math.min((savings / user.goalAmount) * 100, 100);
+
+    const handleTransaction = (e) => {
+        e.preventDefault();
+        const val = parseFloat(amount);
+        if (!val || val <= 0) return;
+
+        if (mode === 'deposit') {
+            if (val > balance) {
+                alert("Not enough balance!");
+                return;
+            }
+            depositToSavings(val);
+        } else {
+            if (val > savings) {
+                alert("Not enough savings!");
+                return;
+            }
+            withdrawFromSavings(val);
+        }
+        setAmount('');
+    };
+
+    // Simulate interest for demo
+    const addInterest = () => {
+        const interest = savings * 0.01; // 1%
+        if (interest > 0) {
+            // We need a way to add directly to savings or balance. 
+            // For now, let's add to balance as "Interest Payout" then user can save it, 
+            // OR we can add a method to context to add directly to savings.
+            // Let's just add to balance for simplicity in this demo or update context.
+            // Actually, let's just use updateBalance but mark it as interest.
+            updateBalance(interest, 'Interest Earned');
+            alert(`You earned ₹${interest.toFixed(2)} interest!`);
+        }
+    };
+
+    return (
+        <div style={{ padding: '20px', paddingBottom: '80px', background: '#E3F2FD', minHeight: '100vh' }}>
+            <h1 style={{ textAlign: 'center', color: '#1565C0' }}>Savings Vault 🐷</h1>
+
+            <div style={{ background: 'white', padding: '20px', borderRadius: '20px', textAlign: 'center', boxShadow: '0 4px 10px rgba(0,0,0,0.1)', marginBottom: '20px' }}>
+                <div style={{ fontSize: '60px', marginBottom: '10px' }}>🏦</div>
+                <h2 style={{ margin: 0, fontSize: '40px', color: '#2196F3' }}>₹{savings.toFixed(2)}</h2>
+                <p style={{ color: '#666' }}>Current Savings</p>
+
+                <div style={{ marginTop: '20px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px', fontSize: '14px' }}>
+                        <span>Goal: {user.goal}</span>
+                        <span>₹{user.goalAmount}</span>
+                    </div>
+                    <div style={{ width: '100%', height: '15px', background: '#eee', borderRadius: '10px', overflow: 'hidden' }}>
+                        <div style={{ width: `${goalProgress}%`, height: '100%', background: '#4CAF50', transition: 'width 0.5s ease' }}></div>
+                    </div>
+                    <p style={{ fontSize: '12px', color: '#888', marginTop: '5px' }}>{Math.round(goalProgress)}% Reached</p>
+                </div>
+            </div>
+
+            <div style={{ background: 'white', padding: '20px', borderRadius: '20px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
+                <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+                    <button
+                        onClick={() => setMode('deposit')}
+                        style={{ flex: 1, padding: '10px', borderRadius: '10px', border: 'none', background: mode === 'deposit' ? '#2196F3' : '#eee', color: mode === 'deposit' ? 'white' : '#333', fontWeight: 'bold' }}
+                    >
+                        Deposit ⬇️
+                    </button>
+                    <button
+                        onClick={() => setMode('withdraw')}
+                        style={{ flex: 1, padding: '10px', borderRadius: '10px', border: 'none', background: mode === 'withdraw' ? '#FF9800' : '#eee', color: mode === 'withdraw' ? 'white' : '#333', fontWeight: 'bold' }}
+                    >
+                        Withdraw ⬆️
+                    </button>
+                </div>
+
+                <form onSubmit={handleTransaction}>
+                    <div style={{ marginBottom: '15px' }}>
+                        <label style={{ display: 'block', marginBottom: '5px', color: '#666' }}>
+                            {mode === 'deposit' ? 'Add to Savings (from Balance)' : 'Take from Savings (to Balance)'}
+                        </label>
+                        <input
+                            type="number"
+                            value={amount}
+                            onChange={(e) => setAmount(e.target.value)}
+                            placeholder="Amount"
+                            step="0.01"
+                            style={{ width: '100%', padding: '15px', fontSize: '20px', borderRadius: '10px', border: '1px solid #ccc' }}
+                        />
+                        <p style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>
+                            Available: ₹{mode === 'deposit' ? balance.toFixed(2) : savings.toFixed(2)}
+                        </p>
+                    </div>
+
+                    <button type="submit" style={{ width: '100%', padding: '15px', background: mode === 'deposit' ? '#2196F3' : '#FF9800', color: 'white', border: 'none', borderRadius: '10px', fontSize: '18px', fontWeight: 'bold' }}>
+                        {mode === 'deposit' ? 'Save Money' : 'Withdraw Money'}
+                    </button>
+                </form>
+            </div>
+
+            <div style={{ marginTop: '20px', textAlign: 'center' }}>
+                <button onClick={addInterest} style={{ background: 'transparent', border: '1px dashed #2196F3', color: '#2196F3', padding: '10px 20px', borderRadius: '20px' }}>
+                    ✨ Simulate Interest (1%)
+                </button>
+            </div>
+
+            <Navbar />
+        </div>
+    );
+};
+
+export default Save;

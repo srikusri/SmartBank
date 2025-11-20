@@ -1,0 +1,42 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BankProvider, useBank } from './context/BankContext';
+import { Onboarding, Home, Earn, Save, Spend, Wallet, Learn } from './pages';
+import Navbar from './components/Navbar';
+
+const ProtectedRoute = ({ children }) => {
+  const { state, loading } = useBank();
+  if (loading) return <div>Loading...</div>;
+  if (!state.user) return <Navigate to="/onboarding" />;
+  return children;
+};
+
+const AppContent = () => {
+  const { state } = useBank();
+  return (
+    <div className="app-container">
+      <Routes>
+        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+        <Route path="/earn" element={<ProtectedRoute><Earn /></ProtectedRoute>} />
+        <Route path="/save" element={<ProtectedRoute><Save /></ProtectedRoute>} />
+        <Route path="/spend" element={<ProtectedRoute><Spend /></ProtectedRoute>} />
+        <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
+        <Route path="/learn" element={<ProtectedRoute><Learn /></ProtectedRoute>} />
+      </Routes>
+      {state.user && <Navbar />}
+    </div>
+  );
+};
+
+function App() {
+  return (
+    <BankProvider>
+      <Router basename={import.meta.env.BASE_URL}>
+        <AppContent />
+      </Router>
+    </BankProvider>
+  );
+}
+
+export default App;
