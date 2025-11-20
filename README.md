@@ -1,16 +1,75 @@
-# React + Vite
+# 🏦 SmartBank — Learn. Earn. Spend.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**SmartBank** is a fun, interactive digital banking simulator designed to teach kids financial literacy. It features a safe, local-only environment where users can earn virtual money through math quests, save for goals, spend in a virtual store, and even invest in a simulated stock market!
 
-Currently, two official plugins are available:
+## 🌟 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 💰 Earn
+- Solve math problems (Addition, Subtraction, Percentage) to earn virtual money.
+- Difficulty scales with rewards!
 
-## React Compiler
+### 🐷 Save & Invest
+- **Savings Vault**: Deposit money towards a personal goal (e.g., "New Bicycle").
+- **Fixed Deposits (FD)**: Lock money for a duration to earn higher interest.
+- **Passbook**: Track every transaction with a detailed history.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🛍️ Spend
+- A virtual store with fun items to "buy" (deducts from balance).
+- Teaches budgeting and affordability.
 
-## Expanding the ESLint configuration
+### 💸 Wallet & Transfer
+- **Sound-Based Payments**: Send money to friends nearby using ultrasonic sound waves!
+- **QR Code**: Scan to pay (simulated).
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🏙️ Marketopolis (New!)
+- **Stock Market Game**: Invest in 6 fictional companies like *RoboPets* and *Zoomy Wheels*.
+- **City Builder**: Use your trading profits (Build Points) to upgrade your city from a Village to a Capital.
+- **News Cycle**: A 30-day event system affects stock prices. Watch out for **Bull Buddy** 🐂 and **Bear Buddy** 🐻!
+
+### 🎓 Learn
+- Fun trivia about Indian banking history (Cowrie shells, Shrenis, RBI).
+
+### 📱 PWA Support
+- Installable as a mobile app!
+- Works offline (basic features).
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js installed.
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/SmartBank.git
+   ```
+2. Install dependencies:
+   ```bash
+   cd SmartBank
+   npm install
+   ```
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+## 📱 How to Install on Mobile (PWA)
+1. Open the app in Chrome/Safari on your phone.
+2. Tap **Share** (iOS) or **Menu** (Android).
+3. Select **"Add to Home Screen"**.
+4. Launch **SmartBank** like a native app!
+
+## 🛠️ Tech Stack
+- **Frontend**: React + Vite
+- **Styling**: Vanilla CSS (Mobile-First Design)
+- **State Management**: React Context API
+- **Persistence**: LocalStorage
+- **Audio**: Web Audio API (AudioWorklet)
+
+## 🎨 Credits
+- **Icons**: Emojis & SVG
+- **Fonts**: Fredoka (Google Fonts)
+- **Mascots**: Bull Buddy & Bear Buddy
+
+---
+*Built with ❤️ for the next generation of savers!*
