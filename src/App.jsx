@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { BankProvider, useBank } from './context/BankContext';
-import { Onboarding, Home, Earn, Save, Spend, Wallet, Learn, Passbook } from './pages';
+import { MarketProvider } from './context/MarketContext';
+import { Onboarding, Home, Earn, Save, Spend, Wallet, Learn, Passbook, MarketHome } from './pages';
 import Navbar from './components/Navbar';
 
 const ProtectedRoute = ({ children }) => {
@@ -12,7 +13,7 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const AppContent = () => {
-  const { state } = useBank();
+  const { state } = useBank(); // Moved useBank hook here to access state for Navbar
   return (
     <div className="app-container">
       <Routes>
@@ -24,6 +25,7 @@ const AppContent = () => {
         <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
         <Route path="/passbook" element={<ProtectedRoute><Passbook /></ProtectedRoute>} />
         <Route path="/learn" element={<ProtectedRoute><Learn /></ProtectedRoute>} />
+        <Route path="/market" element={<ProtectedRoute><MarketHome /></ProtectedRoute>} />
       </Routes>
       {state.user && <Navbar />}
     </div>
@@ -34,7 +36,9 @@ function App() {
   return (
     <BankProvider>
       <Router basename={import.meta.env.BASE_URL}>
-        <AppContent />
+        <MarketProvider>
+          <AppContent />
+        </MarketProvider>
       </Router>
     </BankProvider>
   );

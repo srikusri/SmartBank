@@ -30,30 +30,22 @@ const Home = () => {
 
                 {/* Quick Actions */}
                 <h3 style={{ marginBottom: '15px' }}>Quick Actions</h3>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '25px' }}>
-                    <Link to="/earn" style={{ textDecoration: 'none' }}>
-                        <div style={{ background: '#FF9800', color: 'white', padding: '20px', borderRadius: '15px', textAlign: 'center' }}>
-                            <div style={{ fontSize: '30px', marginBottom: '5px' }}>🎮</div>
-                            <div style={{ fontWeight: 'bold' }}>Earn Money</div>
-                        </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '20px' }}>
+                    <Link to="/earn" style={{ textDecoration: 'none', color: 'white', background: '#FF9800', padding: '15px', borderRadius: '15px', display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
+                        <span style={{ fontSize: '24px', marginBottom: '5px' }}>💰</span>
+                        <span style={{ fontWeight: 'bold' }}>Earn Money</span>
                     </Link>
-                    <Link to="/save" style={{ textDecoration: 'none' }}>
-                        <div style={{ background: '#2196F3', color: 'white', padding: '20px', borderRadius: '15px', textAlign: 'center' }}>
-                            <div style={{ fontSize: '30px', marginBottom: '5px' }}>🐷</div>
-                            <div style={{ fontWeight: 'bold' }}>Save Now</div>
-                        </div>
+                    <Link to="/market" style={{ textDecoration: 'none', color: 'white', background: '#673AB7', padding: '15px', borderRadius: '15px', display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
+                        <span style={{ fontSize: '24px', marginBottom: '5px' }}>🏙️</span>
+                        <span style={{ fontWeight: 'bold' }}>Marketopolis</span>
                     </Link>
-                    <Link to="/spend" style={{ textDecoration: 'none' }}>
-                        <div style={{ background: '#E91E63', color: 'white', padding: '20px', borderRadius: '15px', textAlign: 'center' }}>
-                            <div style={{ fontSize: '30px', marginBottom: '5px' }}>🛍️</div>
-                            <div style={{ fontWeight: 'bold' }}>Store</div>
-                        </div>
+                    <Link to="/save" style={{ textDecoration: 'none', color: 'white', background: '#2196F3', padding: '15px', borderRadius: '15px', display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
+                        <span style={{ fontSize: '24px', marginBottom: '5px' }}>🐷</span>
+                        <span style={{ fontWeight: 'bold' }}>Save & FD</span>
                     </Link>
-                    <Link to="/wallet" style={{ textDecoration: 'none' }}>
-                        <div style={{ background: '#9C27B0', color: 'white', padding: '20px', borderRadius: '15px', textAlign: 'center' }}>
-                            <div style={{ fontSize: '30px', marginBottom: '5px' }}>💸</div>
-                            <div style={{ fontWeight: 'bold' }}>Transfer</div>
-                        </div>
+                    <Link to="/spend" style={{ textDecoration: 'none', color: 'white', background: '#E91E63', padding: '15px', borderRadius: '15px', display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
+                        <span style={{ fontSize: '24px', marginBottom: '5px' }}>🛍️</span>
+                        <span style={{ fontWeight: 'bold' }}>Spend</span>
                     </Link>
                 </div>
 
