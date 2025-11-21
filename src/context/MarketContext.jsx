@@ -79,12 +79,17 @@ export const MarketProvider = ({ children }) => {
     const [gameState, setGameState] = useState(INITIAL_GAME_STATE);
     const [loading, setLoading] = useState(true);
 
+    const [marketEvents, setMarketEvents] = useState([]);
+    const [newsTicker, setNewsTicker] = useState([]);
+
     // Load from storage on mount
     useEffect(() => {
         const savedMarket = getStorage('market_data');
         if (savedMarket) {
             setStocks(savedMarket.stocks);
             setGameState(savedMarket.gameState);
+            setMarketEvents(savedMarket.marketEvents || []);
+            setNewsTicker(savedMarket.newsTicker || []);
         }
         setLoading(false);
     }, []);
@@ -92,9 +97,9 @@ export const MarketProvider = ({ children }) => {
     // Save to storage on change
     useEffect(() => {
         if (!loading) {
-            setStorage({ stocks, gameState }, 'market_data');
+            setStorage({ stocks, gameState, marketEvents, newsTicker }, 'market_data');
         }
-    }, [stocks, gameState, loading]);
+    }, [stocks, gameState, marketEvents, newsTicker, loading]);
 
     const buyStock = (stockId, quantity, currentBalance, updateBalance) => {
         const stock = stocks.find(s => s.id === stockId);
@@ -141,16 +146,40 @@ export const MarketProvider = ({ children }) => {
         const nextDay = gameState.day + 1;
         const newsEvent = NEWS_EVENTS.find(n => n.day === nextDay) || { title: "Quiet Day", effect: "Market stable", impacts: {} };
 
+        // Random Market Events (Dynamic)
+        const randomEventChance = Math.random();
+        let dynamicEvent = null;
+        if (randomEventChance > 0.7) { // 30% chance of a random event
+            const eventTypes = [
+                { title: "Tech Boom", effect: "Tech stocks +5%", impacts: { robo: 0.05, giga: 0.05, sky: 0.05 } },
+                { title: "Market Crash", effect: "All stocks -10%", impacts: { all: -0.10 } },
+                { title: "Bumper Harvest", effect: "GreenLeaf +15%", impacts: { farm: 0.15 } },
+                { title: "Regulatory Crackdown", effect: "SkySend -12%", impacts: { sky: -0.12 } }
+            ];
+            dynamicEvent = eventTypes[Math.floor(Math.random() * eventTypes.length)];
+        }
+
         const newStocks = stocks.map(stock => {
             let changePercent = 0;
 
-            // Apply specific impact
+            // Apply specific impact from scheduled news
             if (newsEvent.impacts[stock.id]) {
-                changePercent = newsEvent.impacts[stock.id];
+                changePercent += newsEvent.impacts[stock.id];
             } else if (newsEvent.impacts.all) {
-                changePercent = newsEvent.impacts.all;
-            } else {
-                // Random fluctuation if no specific news
+                changePercent += newsEvent.impacts.all;
+            }
+
+            // Apply dynamic event impact
+            if (dynamicEvent) {
+                if (dynamicEvent.impacts[stock.id]) {
+                    changePercent += dynamicEvent.impacts[stock.id];
+                } else if (dynamicEvent.impacts.all) {
+                    changePercent += dynamicEvent.impacts.all;
+                }
+            }
+
+            // Random fluctuation if no major news
+            if (changePercent === 0) {
                 changePercent = (Math.random() * 10 - 5) / 100; // +/- 5%
             }
 
@@ -163,6 +192,17 @@ export const MarketProvider = ({ children }) => {
         });
 
         setStocks(newStocks);
+
+        // Update Ticker
+        const newTickerItem = `Day ${nextDay}: ${newsEvent.title} (${newsEvent.effect})`;
+        const dynamicTickerItem = dynamicEvent ? `BREAKING: ${dynamicEvent.title} (${dynamicEvent.effect})` : null;
+
+        setNewsTicker(prev => {
+            const updated = [newTickerItem, ...prev];
+            if (dynamicEvent) updated.unshift(dynamicTickerItem);
+            return updated.slice(0, 10); // Keep last 10 news items
+        });
+
         setGameState(prev => ({
             ...prev,
             day: nextDay,
@@ -197,7 +237,7 @@ export const MarketProvider = ({ children }) => {
     };
 
     return (
-        <MarketContext.Provider value={{ stocks, gameState, buyStock, sellStock, advanceDay, upgradeCity, loading, BUILDINGS }}>
+        <MarketContext.Provider value={{ stocks, gameState, buyStock, sellStock, advanceDay, upgradeCity, loading, BUILDINGS, newsTicker }}>
             {children}
         </MarketContext.Provider>
     );

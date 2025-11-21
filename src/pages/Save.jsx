@@ -4,7 +4,7 @@ import { useBank } from '../context/BankContext';
 import Navbar from '../components/Navbar';
 
 const Save = () => {
-    const { state, depositToSavings, withdrawFromSavings, updateBalance, createFD, redeemFD } = useBank();
+    const { state, depositToSavings, withdrawFromSavings, updateBalance, createFD, redeemFD, createSavingsGoal, contributeToGoal } = useBank();
     const { user, balance, savings } = state;
     const [amount, setAmount] = useState('');
     const [mode, setMode] = useState('deposit'); // deposit or withdraw
@@ -147,6 +147,59 @@ const Save = () => {
                     ) : (
                         <p style={{ textAlign: 'center', color: '#999', fontSize: '12px' }}>No active FDs.</p>
                     )}
+                </div>
+            </div>
+
+            {/* Savings Goals */}
+            <div style={{ background: 'white', padding: '20px', borderRadius: '20px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)', marginTop: '20px' }}>
+                <h3 style={{ textAlign: 'center', color: '#1565C0' }}>🎯 Savings Goals</h3>
+
+                <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
+                    <input id="goalName" placeholder="Goal Name" style={{ flex: 2, padding: '8px', borderRadius: '5px', border: '1px solid #ccc' }} />
+                    <input id="goalAmount" type="number" placeholder="Target" style={{ flex: 1, padding: '8px', borderRadius: '5px', border: '1px solid #ccc' }} />
+                    <button
+                        onClick={() => {
+                            const name = document.getElementById('goalName').value;
+                            const target = document.getElementById('goalAmount').value;
+                            if (name && target) {
+                                createSavingsGoal(name, parseInt(target), '🎯');
+                                document.getElementById('goalName').value = '';
+                                document.getElementById('goalAmount').value = '';
+                            }
+                        }}
+                        style={{ padding: '8px', background: '#2196F3', color: 'white', border: 'none', borderRadius: '5px' }}
+                    >
+                        +
+                    </button>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    {state.savingsGoals && state.savingsGoals.map(goal => (
+                        <div key={goal.id} style={{ background: '#f9f9f9', padding: '10px', borderRadius: '10px', border: '1px solid #eee' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
+                                <div style={{ fontWeight: 'bold' }}>{goal.icon} {goal.name}</div>
+                                <div style={{ fontSize: '12px' }}>₹{goal.currentAmount} / ₹{goal.targetAmount}</div>
+                            </div>
+                            <div style={{ width: '100%', height: '10px', background: '#eee', borderRadius: '5px', overflow: 'hidden', marginBottom: '10px' }}>
+                                <div style={{ width: `${Math.min((goal.currentAmount / goal.targetAmount) * 100, 100)}%`, height: '100%', background: '#4CAF50' }}></div>
+                            </div>
+                            {goal.currentAmount < goal.targetAmount && (
+                                <button
+                                    onClick={() => {
+                                        const amt = prompt(`Add money to ${goal.name}:`);
+                                        if (amt) contributeToGoal(goal.id, parseInt(amt));
+                                    }}
+                                    style={{ width: '100%', padding: '5px', background: '#2196F3', color: 'white', border: 'none', borderRadius: '5px', fontSize: '12px' }}
+                                >
+                                    Contribute
+                                </button>
+                            )}
+                            {goal.currentAmount >= goal.targetAmount && (
+                                <div style={{ textAlign: 'center', color: '#4CAF50', fontWeight: 'bold', fontSize: '12px' }}>🎉 Goal Reached!</div>
+                            )}
+                        </div>
+                    ))}
+                    {(!state.savingsGoals || state.savingsGoals.length === 0) && <div style={{ textAlign: 'center', color: '#999', fontSize: '12px' }}>No active goals</div>}
                 </div>
             </div>
 

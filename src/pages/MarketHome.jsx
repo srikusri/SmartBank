@@ -3,6 +3,7 @@ import { useMarket } from '../context/MarketContext';
 import { useBank } from '../context/BankContext';
 import Navbar from '../components/Navbar';
 import { Link } from 'react-router-dom';
+import Leaderboard from '../components/Leaderboard';
 
 const MarketHome = () => {
     const { stocks, gameState, buyStock, sellStock, advanceDay, upgradeCity, BUILDINGS } = useMarket();
@@ -45,12 +46,21 @@ const MarketHome = () => {
                 <div style={{ fontSize: '40px' }}>
                     {news.effect.includes('+') ? '🐂' : '🐻'}
                 </div>
-                <div>
+                <div style={{ flex: 1 }}>
                     <div style={{ fontWeight: 'bold', fontSize: '12px', color: '#E65100' }}>
                         {news.effect.includes('+') ? 'BULL BUDDY SAYS:' : 'BEAR BUDDY SAYS:'}
                     </div>
                     <div style={{ fontWeight: 'bold', fontSize: '16px', marginBottom: '5px' }}>{news.title}</div>
                     <div style={{ fontSize: '14px' }}>{news.effect}</div>
+                </div>
+            </div>
+
+            {/* Dynamic News Feed */}
+            <div style={{ background: '#212121', color: '#0f0', padding: '10px', borderRadius: '5px', marginBottom: '20px', fontFamily: 'monospace', fontSize: '12px', overflow: 'hidden', whiteSpace: 'nowrap' }}>
+                <div style={{ display: 'inline-block', animation: 'scroll 20s linear infinite' }}>
+                    {useMarket().newsTicker.map((item, i) => (
+                        <span key={i} style={{ marginRight: '30px' }}>📰 {item}</span>
+                    ))}
                 </div>
             </div>
 
@@ -109,6 +119,9 @@ const MarketHome = () => {
                     })}
                 </div>
             </div>
+
+            {/* Leaderboard */}
+            <Leaderboard />
 
             {/* Stock Market Ticker */}
             <h3 style={{ marginBottom: '10px' }}>📈 Stock Market (Live Ticker)</h3>

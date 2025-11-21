@@ -1,6 +1,8 @@
 import React from 'react';
 import { useBank } from '../context/BankContext';
 import StoreItem from '../components/StoreItem';
+import Loans from '../components/Loans';
+import Subscriptions from '../components/Subscriptions';
 import Navbar from '../components/Navbar';
 
 const ITEMS = [
@@ -44,6 +46,11 @@ const Spend = () => {
                         canAfford={balance >= item.price}
                     />
                 ))}
+            </div>
+
+            <div style={{ marginTop: '30px' }}>
+                <Subscriptions />
+                <Loans />
             </div>
 
             <Navbar />

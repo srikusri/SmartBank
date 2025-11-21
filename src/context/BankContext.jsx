@@ -25,7 +25,10 @@ const INITIAL_STATE = {
         questsCompleted: 0,
         moneySent: 0
     },
-    pin: null // 4-digit PIN for transactions
+    pin: null, // 4-digit PIN for transactions
+    loans: [], // { id, amount, interestRate, dueDate, isPaid }
+    subscriptions: [], // { id, name, amount, frequency, nextPaymentDate }
+    savingsGoals: [] // { id, name, targetAmount, currentAmount, icon }
 };
 
 export const BankProvider = ({ children }) => {
@@ -199,8 +202,86 @@ export const BankProvider = ({ children }) => {
         }
     };
 
+    // --- Advanced Banking Features ---
+
+    const takeLoan = (amount) => {
+        setState(prev => {
+            const interestRate = 0.10; // 10% interest
+            const newLoan = {
+                id: Date.now(),
+                amount,
+                totalRepayment: Math.floor(amount * (1 + interestRate)),
+                interestRate,
+                dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days
+                isPaid: false
+            };
+            return {
+                ...prev,
+                balance: prev.balance + amount,
+                loans: [...(prev.loans || []), newLoan],
+                transactions: [{ id: Date.now(), type: 'credit', amount, description: 'Bank Loan', date: new Date().toISOString() }, ...prev.transactions]
+            };
+        });
+    };
+
+    const repayLoan = (loanId) => {
+        setState(prev => {
+            const loan = prev.loans.find(l => l.id === loanId);
+            if (!loan || loan.isPaid || prev.balance < loan.totalRepayment) return prev;
+
+            return {
+                ...prev,
+                balance: prev.balance - loan.totalRepayment,
+                loans: prev.loans.map(l => l.id === loanId ? { ...l, isPaid: true } : l),
+                transactions: [{ id: Date.now(), type: 'debit', amount: loan.totalRepayment, description: 'Loan Repayment', date: new Date().toISOString() }, ...prev.transactions]
+            };
+        });
+    };
+
+    const addSubscription = (name, amount) => {
+        setState(prev => ({
+            ...prev,
+            subscriptions: [...(prev.subscriptions || []), { id: Date.now(), name, amount, active: true }]
+        }));
+    };
+
+    const paySubscription = (subId) => {
+        setState(prev => {
+            const sub = prev.subscriptions.find(s => s.id === subId);
+            if (!sub || prev.balance < sub.amount) return prev;
+
+            return {
+                ...prev,
+                balance: prev.balance - sub.amount,
+                transactions: [{ id: Date.now(), type: 'debit', amount: sub.amount, description: `Sub: ${sub.name}`, date: new Date().toISOString() }, ...prev.transactions]
+            };
+        });
+    };
+
+    const createSavingsGoal = (name, targetAmount, icon) => {
+        setState(prev => ({
+            ...prev,
+            savingsGoals: [...(prev.savingsGoals || []), { id: Date.now(), name, targetAmount, currentAmount: 0, icon }]
+        }));
+    };
+
+    const contributeToGoal = (goalId, amount) => {
+        setState(prev => {
+            if (prev.balance < amount) return prev;
+            return {
+                ...prev,
+                balance: prev.balance - amount,
+                savingsGoals: prev.savingsGoals.map(g => g.id === goalId ? { ...g, currentAmount: g.currentAmount + amount } : g),
+                transactions: [{ id: Date.now(), type: 'debit', amount, description: `Goal Contribution`, date: new Date().toISOString() }, ...prev.transactions]
+            };
+        });
+    };
+
     return (
-        <BankContext.Provider value={{ state, login, updateBalance, depositToSavings, withdrawFromSavings, createFD, redeemFD, resetApp, loading, setWalletPin, verifyWalletPin }}>
+        <BankContext.Provider value={{
+            state, login, updateBalance, depositToSavings, withdrawFromSavings, createFD, redeemFD, resetApp, loading, setWalletPin, verifyWalletPin,
+            takeLoan, repayLoan, addSubscription, paySubscription, createSavingsGoal, contributeToGoal
+        }}>
             {children}
         </BankContext.Provider>
     );
