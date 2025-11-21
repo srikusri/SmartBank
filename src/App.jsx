@@ -12,6 +12,8 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
+import SplashScreen from './components/SplashScreen';
+
 const AppContent = () => {
   const { state } = useBank(); // Moved useBank hook here to access state for Navbar
   return (
@@ -33,11 +35,17 @@ const AppContent = () => {
 };
 
 function App() {
+  const [showSplash, setShowSplash] = React.useState(true);
+
   return (
     <BankProvider>
       <Router basename={import.meta.env.BASE_URL}>
         <MarketProvider>
-          <AppContent />
+          {showSplash ? (
+            <SplashScreen onFinish={() => setShowSplash(false)} />
+          ) : (
+            <AppContent />
+          )}
         </MarketProvider>
       </Router>
     </BankProvider>
