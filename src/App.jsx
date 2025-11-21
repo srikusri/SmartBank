@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { BankProvider, useBank } from './context/BankContext';
 import { MarketProvider } from './context/MarketContext';
 import { Onboarding, Home, Earn, Save, Spend, Wallet, Learn, Passbook, MarketHome } from './pages';
@@ -39,7 +39,7 @@ function App() {
 
   return (
     <BankProvider>
-      <Router basename={import.meta.env.BASE_URL}>
+      <Router>
         <MarketProvider>
           {showSplash ? (
             <SplashScreen onFinish={() => setShowSplash(false)} />
