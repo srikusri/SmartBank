@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useBank } from '../context/BankContext';
 import Navbar from '../components/Navbar';
-import QRCode from 'qrcode.react';
+import { QRCodeCanvas as QRCode } from 'qrcode.react';
 import { Scanner } from '@yudiel/react-qr-scanner';
 
 const Wallet = () => {

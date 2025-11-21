@@ -14,8 +14,9 @@ const MarketHome = () => {
 
     const handleBuy = () => {
         if (buyStock(selectedStock.id, parseInt(qty), bankState.balance, updateBalance)) {
-            alert(`Bought ${qty} ${selectedStock.name}!`);
             setQty(1);
+            setSelectedStock(null);
+            alert(`Bought ${qty} ${selectedStock.name}!`);
         } else {
             alert("Insufficient funds!");
         }
@@ -24,8 +25,9 @@ const MarketHome = () => {
     const handleSell = () => {
         const earned = sellStock(selectedStock.id, parseInt(qty), updateBalance);
         if (earned > 0) {
-            alert(`Sold! Earned ${earned} Build Points.`);
             setQty(1);
+            setSelectedStock(null);
+            alert(`Sold! Earned ${earned} Build Points.`);
         } else {
             alert("Not enough shares!");
         }
@@ -41,8 +43,36 @@ const MarketHome = () => {
                 </div>
             </div>
 
+            {/* Stock Market Ticker - Moved to Top */}
+            <h3 style={{ marginBottom: '10px' }}>📈 Stock Market (Live Ticker)</h3>
+            <div className="ticker-container">
+                <div className="ticker-content">
+                    {/* Duplicate list for seamless scrolling */}
+                    {[...stocks, ...stocks, ...stocks].map((stock, index) => (
+                        <div
+                            key={`${stock.id}-${index}`}
+                            className="ticker-item"
+                            onClick={() => setSelectedStock(stock)}
+                            style={{
+                                borderColor: selectedStock?.id === stock.id ? '#2196F3' : '#eee',
+                                background: selectedStock?.id === stock.id ? '#E3F2FD' : '#f9f9f9'
+                            }}
+                        >
+                            <div style={{ fontWeight: 'bold', fontSize: '14px' }}>{stock.name}</div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5px' }}>
+                                <span style={{ fontSize: '16px' }}>₹{stock.price}</span>
+                                <span style={{ fontSize: '12px', color: stock.trend === 'up' ? 'green' : stock.trend === 'down' ? 'red' : 'gray' }}>
+                                    {stock.trend === 'up' ? '▲' : stock.trend === 'down' ? '▼' : '➖'}
+                                </span>
+                            </div>
+                            <div style={{ fontSize: '10px', color: '#999', marginTop: '5px' }}>Owned: {portfolio[stock.id] || 0}</div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
             {/* News Ticker with Mascot */}
-            <div style={{ background: '#FFF3E0', padding: '15px', borderRadius: '15px', marginBottom: '20px', borderLeft: '5px solid #FF9800', display: 'flex', alignItems: 'center', gap: '15px' }}>
+            <div style={{ background: '#FFF3E0', padding: '15px', borderRadius: '15px', marginBottom: '20px', marginTop: '20px', borderLeft: '5px solid #FF9800', display: 'flex', alignItems: 'center', gap: '15px' }}>
                 <div style={{ fontSize: '40px' }}>
                     {news.effect.includes('+') ? '🐂' : '🐻'}
                 </div>
@@ -120,36 +150,8 @@ const MarketHome = () => {
                 </div>
             </div>
 
-            {/* Leaderboard */}
+            {/* Leaderboard - Moved Below City Builder */}
             <Leaderboard />
-
-            {/* Stock Market Ticker */}
-            <h3 style={{ marginBottom: '10px' }}>📈 Stock Market (Live Ticker)</h3>
-            <div className="ticker-container">
-                <div className="ticker-content">
-                    {/* Duplicate list for seamless scrolling */}
-                    {[...stocks, ...stocks, ...stocks].map((stock, index) => (
-                        <div
-                            key={`${stock.id}-${index}`}
-                            className="ticker-item"
-                            onClick={() => setSelectedStock(stock)}
-                            style={{
-                                borderColor: selectedStock?.id === stock.id ? '#2196F3' : '#eee',
-                                background: selectedStock?.id === stock.id ? '#E3F2FD' : '#f9f9f9'
-                            }}
-                        >
-                            <div style={{ fontWeight: 'bold', fontSize: '14px' }}>{stock.name}</div>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5px' }}>
-                                <span style={{ fontSize: '16px' }}>₹{stock.price}</span>
-                                <span style={{ fontSize: '12px', color: stock.trend === 'up' ? 'green' : stock.trend === 'down' ? 'red' : 'gray' }}>
-                                    {stock.trend === 'up' ? '▲' : stock.trend === 'down' ? '▼' : '➖'}
-                                </span>
-                            </div>
-                            <div style={{ fontSize: '10px', color: '#999', marginTop: '5px' }}>Owned: {portfolio[stock.id] || 0}</div>
-                        </div>
-                    ))}
-                </div>
-            </div>
 
             {/* Trading Panel */}
             {selectedStock && (
