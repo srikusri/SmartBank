@@ -5,7 +5,7 @@ import { useBank } from '../context/BankContext';
 const AVATARS = ['🐶', '🐱', '🦁', '🦄', '🤖', '👽'];
 
 const Onboarding = () => {
-    const { login } = useBank();
+    const { login, state, loading } = useBank();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
@@ -14,6 +14,14 @@ const Onboarding = () => {
         goalAmount: '',
         bankName: 'Smart Bank'
     });
+
+    useEffect(() => {
+        if (!loading && state.user) {
+            navigate('/');
+        }
+    }, [state.user, loading, navigate]);
+
+    if (loading) return <div>Loading...</div>;
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
