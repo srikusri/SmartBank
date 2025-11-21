@@ -128,13 +128,13 @@ const Wallet = () => {
     };
 
     return (
-        <div style={{ padding: '20px', paddingBottom: '80px', background: '#F3E5F5', minHeight: '100vh' }}>
+        <div style={{ padding: '20px', paddingBottom: '80px', background: 'var(--bg-app)', minHeight: '100vh' }}>
             <h1 style={{ textAlign: 'center', color: '#7B1FA2' }}>My Wallet 💸</h1>
 
             {mode === 'home' && (
                 <div style={{ textAlign: 'center' }}>
-                    <div style={{ background: 'white', padding: '30px', borderRadius: '20px', marginBottom: '30px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
-                        <p style={{ margin: 0, color: '#666' }}>Available Balance</p>
+                    <div style={{ background: 'var(--bg-card)', padding: '30px', borderRadius: '20px', marginBottom: '30px', boxShadow: `0 4px 10px var(--shadow-color)` }}>
+                        <p style={{ margin: 0, color: 'var(--text-secondary)' }}>Available Balance</p>
                         <h2 style={{ margin: '10px 0', fontSize: '40px', color: '#9C27B0' }}>₹{balance.toFixed(2)}</h2>
                         <div style={{ marginTop: '10px' }}>
                             {pin ? (
@@ -157,7 +157,7 @@ const Wallet = () => {
                         </button>
                         <button
                             onClick={() => setMode('receive')}
-                            style={{ padding: '20px', fontSize: '20px', borderRadius: '15px', border: 'none', background: '#fff', color: '#9C27B0', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}
+                            style={{ padding: '20px', fontSize: '20px', borderRadius: '15px', border: 'none', background: 'var(--bg-card)', color: '#9C27B0', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}
                         >
                             📥 Receive Money
                         </button>
@@ -188,9 +188,9 @@ const Wallet = () => {
             )}
 
             {mode === 'set_pin' && (
-                <div style={{ background: 'white', padding: '20px', borderRadius: '20px' }}>
+                <div style={{ background: 'var(--bg-card)', padding: '20px', borderRadius: '20px' }}>
                     <h3 style={{ textAlign: 'center' }}>{pin ? 'Reset' : 'Set'} Secret Key</h3>
-                    <p style={{ textAlign: 'center', color: '#666' }}>Solve to prove you're human!</p>
+                    <p style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>Solve to prove you're human!</p>
                     <div style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold', margin: '20px 0' }}>
                         {mathProblem.q}
                     </div>
@@ -200,17 +200,17 @@ const Wallet = () => {
                             value={mathAnswer}
                             onChange={(e) => setMathAnswer(e.target.value)}
                             placeholder="Answer"
-                            style={{ width: '100%', padding: '15px', marginBottom: '10px', borderRadius: '10px', border: '1px solid #ccc' }}
+                            style={{ width: '100%', padding: '15px', marginBottom: '10px', borderRadius: '10px', border: '1px solid var(--border-color)', background: 'var(--bg-input)', color: 'var(--text-primary)' }}
                         />
-                        <hr style={{ margin: '20px 0', border: 'none', borderTop: '1px dashed #ccc' }} />
-                        <p style={{ textAlign: 'center', color: '#666' }}>Enter new 4-digit Key</p>
+                        <hr style={{ margin: '20px 0', border: 'none', borderTop: '1px dashed var(--border-color)' }} />
+                        <p style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>Enter new 4-digit Key</p>
                         <input
                             type="password"
                             maxLength="4"
                             value={newPin}
                             onChange={(e) => setNewPin(e.target.value)}
                             placeholder="New PIN"
-                            style={{ width: '100%', padding: '15px', marginBottom: '10px', borderRadius: '10px', border: '1px solid #ccc' }}
+                            style={{ width: '100%', padding: '15px', marginBottom: '10px', borderRadius: '10px', border: '1px solid var(--border-color)', background: 'var(--bg-input)', color: 'var(--text-primary)' }}
                         />
                         <input
                             type="password"
@@ -218,10 +218,10 @@ const Wallet = () => {
                             value={confirmPin}
                             onChange={(e) => setConfirmPin(e.target.value)}
                             placeholder="Confirm PIN"
-                            style={{ width: '100%', padding: '15px', marginBottom: '20px', borderRadius: '10px', border: '1px solid #ccc' }}
+                            style={{ width: '100%', padding: '15px', marginBottom: '20px', borderRadius: '10px', border: '1px solid var(--border-color)', background: 'var(--bg-input)', color: 'var(--text-primary)' }}
                         />
                         <div style={{ display: 'flex', gap: '10px' }}>
-                            <button type="button" onClick={() => setMode('home')} style={{ flex: 1, padding: '15px', borderRadius: '10px', border: '1px solid #ccc', background: 'transparent' }}>Cancel</button>
+                            <button type="button" onClick={() => setMode('home')} style={{ flex: 1, padding: '15px', borderRadius: '10px', border: '1px solid var(--border-color)', background: 'transparent', color: 'var(--text-primary)' }}>Cancel</button>
                             <button type="submit" style={{ flex: 1, padding: '15px', borderRadius: '10px', border: 'none', background: '#9C27B0', color: 'white', fontWeight: 'bold' }}>Save Key</button>
                         </div>
                     </form>
@@ -229,7 +229,7 @@ const Wallet = () => {
             )}
 
             {mode === 'receive' && (
-                <div style={{ background: 'white', padding: '20px', borderRadius: '20px' }}>
+                <div style={{ background: 'var(--bg-card)', padding: '20px', borderRadius: '20px' }}>
                     <h3 style={{ textAlign: 'center' }}>Receive Money</h3>
                     {!qrData ? (
                         <form onSubmit={handleGenerateQR}>
@@ -238,10 +238,10 @@ const Wallet = () => {
                                 value={amount}
                                 onChange={(e) => setAmount(e.target.value)}
                                 placeholder="Amount to receive"
-                                style={{ width: '100%', padding: '15px', fontSize: '20px', borderRadius: '10px', border: '1px solid #ccc', marginBottom: '20px' }}
+                                style={{ width: '100%', padding: '15px', fontSize: '20px', borderRadius: '10px', border: '1px solid var(--border-color)', background: 'var(--bg-input)', color: 'var(--text-primary)', marginBottom: '20px' }}
                             />
                             <div style={{ display: 'flex', gap: '10px' }}>
-                                <button type="button" onClick={() => setMode('home')} style={{ flex: 1, padding: '15px', borderRadius: '10px', border: '1px solid #ccc', background: 'transparent' }}>Cancel</button>
+                                <button type="button" onClick={() => setMode('home')} style={{ flex: 1, padding: '15px', borderRadius: '10px', border: '1px solid var(--border-color)', background: 'transparent', color: 'var(--text-primary)' }}>Cancel</button>
                                 <button type="submit" style={{ flex: 1, padding: '15px', borderRadius: '10px', border: 'none', background: '#9C27B0', color: 'white', fontWeight: 'bold' }}>Generate QR</button>
                             </div>
                         </form>
@@ -251,7 +251,7 @@ const Wallet = () => {
                                 <QRCode value={qrData} size={200} />
                             </div>
                             <h2 style={{ color: '#4CAF50', margin: '10px 0' }}>₹{amount}</h2>
-                            <p style={{ fontSize: '12px', color: '#666', wordBreak: 'break-all', padding: '10px', background: '#f5f5f5', borderRadius: '5px' }}>
+                            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', wordBreak: 'break-all', padding: '10px', background: 'var(--bg-app)', borderRadius: '5px' }}>
                                 <strong>Debug Data (Copy for Sender):</strong><br />
                                 {qrData}
                             </p>
@@ -260,45 +260,45 @@ const Wallet = () => {
                             <hr style={{ margin: '20px 0' }} />
 
                             <h4>Sender Confirmed?</h4>
-                            <p style={{ fontSize: '14px', color: '#666' }}>Enter the code shown on Sender's screen</p>
+                            <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>Enter the code shown on Sender's screen</p>
                             <form onSubmit={handleReceiveConfirmation}>
                                 <input
                                     type="number"
                                     value={receiverConfirmCode}
                                     onChange={(e) => setReceiverConfirmCode(e.target.value)}
                                     placeholder="Enter 4-digit Code"
-                                    style={{ width: '100%', padding: '15px', fontSize: '20px', textAlign: 'center', letterSpacing: '5px', borderRadius: '10px', border: '1px solid #ccc', marginBottom: '20px' }}
+                                    style={{ width: '100%', padding: '15px', fontSize: '20px', textAlign: 'center', letterSpacing: '5px', borderRadius: '10px', border: '1px solid var(--border-color)', background: 'var(--bg-input)', color: 'var(--text-primary)', marginBottom: '20px' }}
                                 />
                                 <button type="submit" style={{ width: '100%', padding: '15px', borderRadius: '10px', border: 'none', background: '#4CAF50', color: 'white', fontWeight: 'bold' }}>Verify & Receive</button>
                             </form>
-                            <button onClick={() => { setQrData(null); setAmount(''); }} style={{ marginTop: '20px', background: 'transparent', border: 'none', color: '#666' }}>Back</button>
+                            <button onClick={() => { setQrData(null); setAmount(''); }} style={{ marginTop: '20px', background: 'transparent', border: 'none', color: 'var(--text-secondary)' }}>Back</button>
                         </div>
                     )}
                 </div>
             )}
 
             {mode === 'confirm_payment' && scannedData && (
-                <div style={{ background: 'white', padding: '20px', borderRadius: '20px' }}>
+                <div style={{ background: 'var(--bg-card)', padding: '20px', borderRadius: '20px' }}>
                     <h3 style={{ textAlign: 'center' }}>Confirm Payment</h3>
                     <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-                        <p style={{ color: '#666' }}>Sending to</p>
+                        <p style={{ color: 'var(--text-secondary)' }}>Sending to</p>
                         <h2>QR Receiver</h2>
                         <h1 style={{ color: '#9C27B0', fontSize: '50px', margin: '10px 0' }}>₹{scannedData.amount}</h1>
                     </div>
 
                     {!confirmationCode ? (
                         <form onSubmit={handleSendPayment}>
-                            <p style={{ textAlign: 'center', color: '#666' }}>Enter your Secret Key to Pay</p>
+                            <p style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>Enter your Secret Key to Pay</p>
                             <input
                                 type="password"
                                 maxLength="4"
                                 value={paymentPin}
                                 onChange={(e) => setPaymentPin(e.target.value)}
                                 placeholder="Enter PIN"
-                                style={{ width: '100%', padding: '15px', fontSize: '20px', textAlign: 'center', letterSpacing: '5px', borderRadius: '10px', border: '1px solid #ccc', marginBottom: '20px' }}
+                                style={{ width: '100%', padding: '15px', fontSize: '20px', textAlign: 'center', letterSpacing: '5px', borderRadius: '10px', border: '1px solid var(--border-color)', background: 'var(--bg-input)', color: 'var(--text-primary)', marginBottom: '20px' }}
                             />
                             <div style={{ display: 'flex', gap: '10px' }}>
-                                <button type="button" onClick={() => setMode('home')} style={{ flex: 1, padding: '15px', borderRadius: '10px', border: '1px solid #ccc', background: 'transparent' }}>Cancel</button>
+                                <button type="button" onClick={() => setMode('home')} style={{ flex: 1, padding: '15px', borderRadius: '10px', border: '1px solid var(--border-color)', background: 'transparent', color: 'var(--text-primary)' }}>Cancel</button>
                                 <button type="submit" style={{ flex: 1, padding: '15px', borderRadius: '10px', border: 'none', background: '#9C27B0', color: 'white', fontWeight: 'bold' }}>Pay Now</button>
                             </div>
                         </form>

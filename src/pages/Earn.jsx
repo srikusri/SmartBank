@@ -66,9 +66,9 @@ const Earn = () => {
     };
 
     return (
-        <div style={{ padding: '20px', paddingBottom: '80px', background: '#f5f5f5', minHeight: '100vh' }}>
+        <div style={{ padding: '20px', paddingBottom: '80px', background: 'var(--bg-app)', minHeight: '100vh' }}>
             <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Math Quests 🧠</h1>
-            <p style={{ textAlign: 'center', color: '#666', marginBottom: '30px' }}>Solve math problems to earn money!</p>
+            <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '30px' }}>Solve math problems to earn money!</p>
 
             <div>
                 {quests.map(quest => (

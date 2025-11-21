@@ -21,10 +21,10 @@ const Navbar = () => {
             width: '100%',
             display: 'flex',
             justifyContent: 'space-around',
-            background: 'white',
+            background: 'var(--nav-bg)',
             padding: '10px 5px',
-            borderTop: '1px solid #eee',
-            boxShadow: '0 -2px 10px rgba(0,0,0,0.05)',
+            borderTop: '1px solid var(--nav-border)',
+            boxShadow: `0 -2px 10px var(--shadow-color)`,
             zIndex: 1000
         }}>
             {navItems.map(item => {
@@ -35,7 +35,7 @@ const Navbar = () => {
                         to={item.path}
                         style={{
                             textDecoration: 'none',
-                            color: isActive ? '#673AB7' : '#999',
+                            color: isActive ? '#673AB7' : 'var(--text-secondary)',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',

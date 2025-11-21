@@ -47,37 +47,37 @@ const Save = () => {
     };
 
     return (
-        <div style={{ padding: '20px', paddingBottom: '80px', background: '#E3F2FD', minHeight: '100vh' }}>
+        <div style={{ padding: '20px', paddingBottom: '80px', background: 'var(--bg-app)', minHeight: '100vh' }}>
             <h1 style={{ textAlign: 'center', color: '#1565C0' }}>Savings Vault 🐷</h1>
 
-            <div style={{ background: 'white', padding: '20px', borderRadius: '20px', textAlign: 'center', boxShadow: '0 4px 10px rgba(0,0,0,0.1)', marginBottom: '20px' }}>
+            <div style={{ background: 'var(--bg-card)', padding: '20px', borderRadius: '20px', textAlign: 'center', boxShadow: `0 4px 10px var(--shadow-color)`, marginBottom: '20px' }}>
                 <div style={{ fontSize: '60px', marginBottom: '10px' }}>🏦</div>
                 <h2 style={{ margin: 0, fontSize: '40px', color: '#2196F3' }}>₹{savings.toFixed(2)}</h2>
-                <p style={{ color: '#666' }}>Current Savings</p>
+                <p style={{ color: 'var(--text-secondary)' }}>Current Savings</p>
 
                 <div style={{ marginTop: '20px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px', fontSize: '14px' }}>
                         <span>Goal: {user.goal}</span>
                         <span>₹{user.goalAmount}</span>
                     </div>
-                    <div style={{ width: '100%', height: '15px', background: '#eee', borderRadius: '10px', overflow: 'hidden' }}>
+                    <div style={{ width: '100%', height: '15px', background: 'var(--border-color)', borderRadius: '10px', overflow: 'hidden' }}>
                         <div style={{ width: `${goalProgress}%`, height: '100%', background: '#4CAF50', transition: 'width 0.5s ease' }}></div>
                     </div>
-                    <p style={{ fontSize: '12px', color: '#888', marginTop: '5px' }}>{Math.round(goalProgress)}% Reached</p>
+                    <p style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '5px' }}>{Math.round(goalProgress)}% Reached</p>
                 </div>
             </div>
 
-            <div style={{ background: 'white', padding: '20px', borderRadius: '20px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }}>
+            <div style={{ background: 'var(--bg-card)', padding: '20px', borderRadius: '20px', boxShadow: `0 4px 10px var(--shadow-color)` }}>
                 <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
                     <button
                         onClick={() => setMode('deposit')}
-                        style={{ flex: 1, padding: '10px', borderRadius: '10px', border: 'none', background: mode === 'deposit' ? '#2196F3' : '#eee', color: mode === 'deposit' ? 'white' : '#333', fontWeight: 'bold' }}
+                        style={{ flex: 1, padding: '10px', borderRadius: '10px', border: 'none', background: mode === 'deposit' ? '#2196F3' : 'var(--border-color)', color: mode === 'deposit' ? 'white' : 'var(--text-primary)', fontWeight: 'bold' }}
                     >
                         Deposit ⬇️
                     </button>
                     <button
                         onClick={() => setMode('withdraw')}
-                        style={{ flex: 1, padding: '10px', borderRadius: '10px', border: 'none', background: mode === 'withdraw' ? '#FF9800' : '#eee', color: mode === 'withdraw' ? 'white' : '#333', fontWeight: 'bold' }}
+                        style={{ flex: 1, padding: '10px', borderRadius: '10px', border: 'none', background: mode === 'withdraw' ? '#FF9800' : 'var(--border-color)', color: mode === 'withdraw' ? 'white' : 'var(--text-primary)', fontWeight: 'bold' }}
                     >
                         Withdraw ⬆️
                     </button>
@@ -85,7 +85,7 @@ const Save = () => {
 
                 <form onSubmit={handleTransaction}>
                     <div style={{ marginBottom: '15px' }}>
-                        <label style={{ display: 'block', marginBottom: '5px', color: '#666' }}>
+                        <label style={{ display: 'block', marginBottom: '5px', color: 'var(--text-secondary)' }}>
                             {mode === 'deposit' ? 'Add to Savings (from Balance)' : 'Take from Savings (to Balance)'}
                         </label>
                         <input
@@ -94,9 +94,9 @@ const Save = () => {
                             onChange={(e) => setAmount(e.target.value)}
                             placeholder="Amount"
                             step="0.01"
-                            style={{ width: '100%', padding: '15px', fontSize: '20px', borderRadius: '10px', border: '1px solid #ccc' }}
+                            style={{ width: '100%', padding: '15px', fontSize: '20px', borderRadius: '10px', border: '1px solid var(--border-color)', background: 'var(--bg-input)', color: 'var(--text-primary)' }}
                         />
-                        <p style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>
+                        <p style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '5px' }}>
                             Available: ₹{mode === 'deposit' ? balance.toFixed(2) : savings.toFixed(2)}
                         </p>
                     </div>
@@ -107,9 +107,9 @@ const Save = () => {
                 </form>
             </div>
 
-            <div style={{ background: 'white', padding: '20px', borderRadius: '20px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)', marginTop: '20px' }}>
+            <div style={{ background: 'var(--bg-card)', padding: '20px', borderRadius: '20px', boxShadow: `0 4px 10px var(--shadow-color)`, marginTop: '20px' }}>
                 <h3 style={{ textAlign: 'center', color: '#1565C0' }}>Fixed Deposits (FD) 📜</h3>
-                <p style={{ textAlign: 'center', fontSize: '12px', color: '#666' }}>Lock money for 1 minute to earn 5% interest!</p>
+                <p style={{ textAlign: 'center', fontSize: '12px', color: 'var(--text-secondary)' }}>Lock money for 1 minute to earn 5% interest!</p>
 
                 <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
                     <button onClick={() => createFD(100, 1)} style={{ flex: 1, padding: '10px', background: '#673AB7', color: 'white', border: 'none', borderRadius: '10px' }}>
@@ -125,10 +125,10 @@ const Save = () => {
                         state.fds.map(fd => {
                             const isMatured = new Date() >= new Date(fd.maturityDate);
                             return (
-                                <div key={fd.id} style={{ background: '#f5f5f5', padding: '10px', borderRadius: '10px', marginBottom: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', opacity: fd.isRedeemed ? 0.5 : 1 }}>
+                                <div key={fd.id} style={{ background: 'var(--bg-app)', padding: '10px', borderRadius: '10px', marginBottom: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', opacity: fd.isRedeemed ? 0.5 : 1 }}>
                                     <div>
                                         <div style={{ fontWeight: 'bold' }}>₹{fd.amount} FD</div>
-                                        <div style={{ fontSize: '12px', color: '#666' }}>
+                                        <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
                                             {fd.isRedeemed ? 'Redeemed' : (isMatured ? 'Matured! Ready to Redeem' : ` matures in ${Math.ceil((new Date(fd.maturityDate) - new Date()) / 1000)} s`)}
                                         </div>
                                     </div>
@@ -145,18 +145,18 @@ const Save = () => {
                             );
                         })
                     ) : (
-                        <p style={{ textAlign: 'center', color: '#999', fontSize: '12px' }}>No active FDs.</p>
+                        <p style={{ textAlign: 'center', color: 'var(--text-secondary)', fontSize: '12px' }}>No active FDs.</p>
                     )}
                 </div>
             </div>
 
             {/* Savings Goals */}
-            <div style={{ background: 'white', padding: '20px', borderRadius: '20px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)', marginTop: '20px' }}>
+            <div style={{ background: 'var(--bg-card)', padding: '20px', borderRadius: '20px', boxShadow: `0 4px 10px var(--shadow-color)`, marginTop: '20px' }}>
                 <h3 style={{ textAlign: 'center', color: '#1565C0' }}>🎯 Savings Goals</h3>
 
                 <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
-                    <input id="goalName" placeholder="Goal Name" style={{ flex: 2, padding: '8px', borderRadius: '5px', border: '1px solid #ccc' }} />
-                    <input id="goalAmount" type="number" placeholder="Target" style={{ flex: 1, padding: '8px', borderRadius: '5px', border: '1px solid #ccc' }} />
+                    <input id="goalName" placeholder="Goal Name" style={{ flex: 2, padding: '8px', borderRadius: '5px', border: '1px solid var(--border-color)', background: 'var(--bg-input)', color: 'var(--text-primary)' }} />
+                    <input id="goalAmount" type="number" placeholder="Target" style={{ flex: 1, padding: '8px', borderRadius: '5px', border: '1px solid var(--border-color)', background: 'var(--bg-input)', color: 'var(--text-primary)' }} />
                     <button
                         onClick={() => {
                             const name = document.getElementById('goalName').value;
@@ -175,12 +175,12 @@ const Save = () => {
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     {state.savingsGoals && state.savingsGoals.map(goal => (
-                        <div key={goal.id} style={{ background: '#f9f9f9', padding: '10px', borderRadius: '10px', border: '1px solid #eee' }}>
+                        <div key={goal.id} style={{ background: 'var(--bg-app)', padding: '10px', borderRadius: '10px', border: '1px solid var(--border-color)' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
                                 <div style={{ fontWeight: 'bold' }}>{goal.icon} {goal.name}</div>
                                 <div style={{ fontSize: '12px' }}>₹{goal.currentAmount} / ₹{goal.targetAmount}</div>
                             </div>
-                            <div style={{ width: '100%', height: '10px', background: '#eee', borderRadius: '5px', overflow: 'hidden', marginBottom: '10px' }}>
+                            <div style={{ width: '100%', height: '10px', background: 'var(--border-color)', borderRadius: '5px', overflow: 'hidden', marginBottom: '10px' }}>
                                 <div style={{ width: `${Math.min((goal.currentAmount / goal.targetAmount) * 100, 100)}%`, height: '100%', background: '#4CAF50' }}></div>
                             </div>
                             {goal.currentAmount < goal.targetAmount && (
@@ -199,7 +199,7 @@ const Save = () => {
                             )}
                         </div>
                     ))}
-                    {(!state.savingsGoals || state.savingsGoals.length === 0) && <div style={{ textAlign: 'center', color: '#999', fontSize: '12px' }}>No active goals</div>}
+                    {(!state.savingsGoals || state.savingsGoals.length === 0) && <div style={{ textAlign: 'center', color: 'var(--text-secondary)', fontSize: '12px' }}>No active goals</div>}
                 </div>
             </div>
 

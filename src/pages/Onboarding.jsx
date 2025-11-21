@@ -61,7 +61,7 @@ const Onboarding = () => {
                         onChange={handleChange}
                         placeholder="Enter your name"
                         required
-                        style={{ width: '100%', padding: '8px', fontSize: '16px' }}
+                        style={{ width: '100%', padding: '8px', fontSize: '16px', background: 'var(--bg-input)', color: 'var(--text-primary)', border: '1px solid var(--border-color)' }}
                     />
                 </div>
 
@@ -75,8 +75,8 @@ const Onboarding = () => {
                                 onClick={() => setFormData({ ...formData, avatar: av })}
                                 style={{
                                     fontSize: '24px',
-                                    background: formData.avatar === av ? '#e0e0e0' : 'transparent',
-                                    border: '1px solid #ccc',
+                                    background: formData.avatar === av ? 'var(--border-color)' : 'transparent',
+                                    border: '1px solid var(--border-color)',
                                     borderRadius: '50%',
                                     cursor: 'pointer'
                                 }}
@@ -89,7 +89,7 @@ const Onboarding = () => {
 
                 <div>
                     <label>Name your Bank:</label>
-                    <select name="bankName" value={formData.bankName} onChange={handleChange} style={{ width: '100%', padding: '8px' }}>
+                    <select name="bankName" value={formData.bankName} onChange={handleChange} style={{ width: '100%', padding: '8px', background: 'var(--bg-input)', color: 'var(--text-primary)', border: '1px solid var(--border-color)' }}>
                         <option value="Smart Bank">Smart Bank</option>
                         <option value="Happy Bank">Happy Bank</option>
                         <option value="Future Bank">Future Bank</option>
@@ -105,7 +105,7 @@ const Onboarding = () => {
                         onChange={handleChange}
                         placeholder="e.g. A new Bicycle"
                         required
-                        style={{ width: '100%', padding: '8px' }}
+                        style={{ width: '100%', padding: '8px', background: 'var(--bg-input)', color: 'var(--text-primary)', border: '1px solid var(--border-color)' }}
                     />
                 </div>
 
@@ -118,7 +118,7 @@ const Onboarding = () => {
                         onChange={handleChange}
                         placeholder="500"
                         required
-                        style={{ width: '100%', padding: '8px' }}
+                        style={{ width: '100%', padding: '8px', background: 'var(--bg-input)', color: 'var(--text-primary)', border: '1px solid var(--border-color)' }}
                     />
                 </div>
 

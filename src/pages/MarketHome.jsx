@@ -34,11 +34,11 @@ const MarketHome = () => {
     };
 
     return (
-        <div style={{ padding: '20px', paddingBottom: '80px', background: '#f0f4f8', minHeight: '100vh' }}>
+        <div style={{ padding: '20px', paddingBottom: '80px', background: 'var(--bg-app)', minHeight: '100vh' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                <h1 style={{ margin: 0, color: '#333' }}>🏙️ Marketopolis</h1>
+                <h1 style={{ margin: 0, color: 'var(--text-primary)' }}>🏙️ Marketopolis</h1>
                 <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: '12px', color: '#666' }}>Day {day}</div>
+                    <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Day {day}</div>
                     <div style={{ fontWeight: 'bold', color: '#673AB7' }}>{buildPoints} BP</div>
                 </div>
             </div>
@@ -54,8 +54,8 @@ const MarketHome = () => {
                             className="ticker-item"
                             onClick={() => setSelectedStock(stock)}
                             style={{
-                                borderColor: selectedStock?.id === stock.id ? '#2196F3' : '#eee',
-                                background: selectedStock?.id === stock.id ? '#E3F2FD' : '#f9f9f9'
+                                borderColor: selectedStock?.id === stock.id ? '#2196F3' : 'var(--border-color)',
+                                background: selectedStock?.id === stock.id ? '#E3F2FD' : 'var(--bg-card)'
                             }}
                         >
                             <div style={{ fontWeight: 'bold', fontSize: '14px' }}>{stock.name}</div>
@@ -65,7 +65,7 @@ const MarketHome = () => {
                                     {stock.trend === 'up' ? '▲' : stock.trend === 'down' ? '▼' : '➖'}
                                 </span>
                             </div>
-                            <div style={{ fontSize: '10px', color: '#999', marginTop: '5px' }}>Owned: {portfolio[stock.id] || 0}</div>
+                            <div style={{ fontSize: '10px', color: 'var(--text-secondary)', marginTop: '5px' }}>Owned: {portfolio[stock.id] || 0}</div>
                         </div>
                     ))}
                 </div>
@@ -96,7 +96,7 @@ const MarketHome = () => {
 
             {/* City Builder */}
             <h3 style={{ marginBottom: '10px' }}>🏗️ City Builder (Level {cityLevel})</h3>
-            <div style={{ background: 'white', padding: '15px', borderRadius: '15px', marginBottom: '20px', boxShadow: '0 4px 10px rgba(0,0,0,0.05)' }}>
+            <div style={{ background: 'var(--bg-card)', padding: '15px', borderRadius: '15px', marginBottom: '20px', boxShadow: `0 4px 10px var(--shadow-color)` }}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
                     {BUILDINGS.map(b => {
                         const isUnlocked = gameState.unlockedBuildings.includes(b.id);
@@ -107,11 +107,11 @@ const MarketHome = () => {
 
                         return (
                             <div key={b.id} style={{
-                                background: isUnlocked ? '#E8F5E9' : '#f9f9f9',
+                                background: isUnlocked ? '#E8F5E9' : 'var(--bg-app)',
                                 padding: '10px',
                                 borderRadius: '10px',
                                 textAlign: 'center',
-                                border: isUnlocked ? '2px solid #4CAF50' : '1px solid #eee',
+                                border: isUnlocked ? '2px solid #4CAF50' : '1px solid var(--border-color)',
                                 opacity: isUnlocked ? 1 : 0.8
                             }}>
                                 <div style={{ fontSize: '24px', marginBottom: '5px' }}>
@@ -155,7 +155,7 @@ const MarketHome = () => {
 
             {/* Trading Panel */}
             {selectedStock && (
-                <div style={{ position: 'fixed', bottom: '70px', left: '10px', right: '10px', background: 'white', padding: '15px', borderRadius: '15px', boxShadow: '0 -5px 20px rgba(0,0,0,0.1)', zIndex: 100 }}>
+                <div style={{ position: 'fixed', bottom: '70px', left: '10px', right: '10px', background: 'var(--bg-card)', padding: '15px', borderRadius: '15px', boxShadow: `0 -5px 20px var(--shadow-color)`, zIndex: 100 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                         <h3 style={{ margin: 0 }}>{selectedStock.name}</h3>
                         <button onClick={() => setSelectedStock(null)} style={{ background: 'none', border: 'none', fontSize: '20px' }}>✕</button>
@@ -166,7 +166,7 @@ const MarketHome = () => {
                             value={qty}
                             onChange={(e) => setQty(e.target.value)}
                             min="1"
-                            style={{ width: '60px', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}
+                            style={{ width: '60px', padding: '10px', borderRadius: '5px', border: '1px solid var(--border-color)', background: 'var(--bg-input)', color: 'var(--text-primary)' }}
                         />
                         <div style={{ fontSize: '14px' }}>Total: ₹{selectedStock.price * qty}</div>
                     </div>

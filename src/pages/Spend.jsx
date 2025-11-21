@@ -29,10 +29,10 @@ const Spend = () => {
     };
 
     return (
-        <div style={{ padding: '20px', paddingBottom: '80px', background: '#FCE4EC', minHeight: '100vh' }}>
+        <div style={{ padding: '20px', paddingBottom: '80px', background: 'var(--bg-app)', minHeight: '100vh' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                 <h1 style={{ margin: 0, color: '#C2185B' }}>Store 🛍️</h1>
-                <div style={{ background: 'white', padding: '5px 10px', borderRadius: '10px', fontWeight: 'bold', color: '#C2185B' }}>
+                <div style={{ background: 'var(--bg-card)', padding: '5px 10px', borderRadius: '10px', fontWeight: 'bold', color: '#C2185B' }}>
                     ₹{balance.toFixed(2)}
                 </div>
             </div>

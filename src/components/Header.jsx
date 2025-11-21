@@ -16,7 +16,7 @@ const Header = () => {
             boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
         }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                <div style={{ fontSize: '40px', background: 'white', borderRadius: '50%', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ fontSize: '40px', background: 'var(--bg-card)', borderRadius: '50%', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     {user.avatar}
                 </div>
                 <div>
