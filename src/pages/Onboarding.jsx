@@ -28,6 +28,7 @@ const Onboarding = () => {
 
         const userData = {
             ...formData,
+            goalAmount: parseInt(formData.goalAmount), // Convert to number
             accountNo,
             upiId,
             joinedAt: new Date().toISOString()

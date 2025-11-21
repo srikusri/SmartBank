@@ -61,7 +61,7 @@ const Save = () => {
                         <span>₹{user.goalAmount}</span>
                     </div>
                     <div style={{ width: '100%', height: '15px', background: '#eee', borderRadius: '10px', overflow: 'hidden' }}>
-                        <div style={{ width: `${goalProgress}% `, height: '100%', background: '#4CAF50', transition: 'width 0.5s ease' }}></div>
+                        <div style={{ width: `${goalProgress}%`, height: '100%', background: '#4CAF50', transition: 'width 0.5s ease' }}></div>
                     </div>
                     <p style={{ fontSize: '12px', color: '#888', marginTop: '5px' }}>{Math.round(goalProgress)}% Reached</p>
                 </div>
