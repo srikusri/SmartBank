@@ -24,7 +24,8 @@ const INITIAL_STATE = {
     stats: {
         questsCompleted: 0,
         moneySent: 0
-    }
+    },
+    pin: null // 4-digit PIN for transactions
 };
 
 export const BankProvider = ({ children }) => {
@@ -182,6 +183,14 @@ export const BankProvider = ({ children }) => {
         });
     };
 
+    const setWalletPin = (pin) => {
+        setState(prev => ({ ...prev, pin }));
+    };
+
+    const verifyWalletPin = (inputPin) => {
+        return state.pin === inputPin;
+    };
+
     const resetApp = () => {
         if (window.confirm("Are you sure you want to reset everything? This cannot be undone.")) {
             clearStorage();
@@ -191,7 +200,7 @@ export const BankProvider = ({ children }) => {
     };
 
     return (
-        <BankContext.Provider value={{ state, login, updateBalance, depositToSavings, withdrawFromSavings, createFD, redeemFD, resetApp, loading }}>
+        <BankContext.Provider value={{ state, login, updateBalance, depositToSavings, withdrawFromSavings, createFD, redeemFD, resetApp, loading, setWalletPin, verifyWalletPin }}>
             {children}
         </BankContext.Provider>
     );

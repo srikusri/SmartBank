@@ -110,31 +110,32 @@ const MarketHome = () => {
                 </div>
             </div>
 
-            {/* Stock Market */}
-            <h3 style={{ marginBottom: '10px' }}>📈 Stock Market</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
-                {stocks.map(stock => (
-                    <div
-                        key={stock.id}
-                        onClick={() => setSelectedStock(stock)}
-                        style={{
-                            background: 'white',
-                            padding: '15px',
-                            borderRadius: '10px',
-                            border: selectedStock?.id === stock.id ? '2px solid #2196F3' : 'none',
-                            boxShadow: '0 2px 5px rgba(0,0,0,0.05)'
-                        }}
-                    >
-                        <div style={{ fontWeight: 'bold', fontSize: '14px' }}>{stock.name}</div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5px' }}>
-                            <span style={{ fontSize: '16px' }}>₹{stock.price}</span>
-                            <span style={{ fontSize: '12px', color: stock.trend === 'up' ? 'green' : stock.trend === 'down' ? 'red' : 'gray' }}>
-                                {stock.trend === 'up' ? '▲' : stock.trend === 'down' ? '▼' : '➖'}
-                            </span>
+            {/* Stock Market Ticker */}
+            <h3 style={{ marginBottom: '10px' }}>📈 Stock Market (Live Ticker)</h3>
+            <div className="ticker-container">
+                <div className="ticker-content">
+                    {/* Duplicate list for seamless scrolling */}
+                    {[...stocks, ...stocks, ...stocks].map((stock, index) => (
+                        <div
+                            key={`${stock.id}-${index}`}
+                            className="ticker-item"
+                            onClick={() => setSelectedStock(stock)}
+                            style={{
+                                borderColor: selectedStock?.id === stock.id ? '#2196F3' : '#eee',
+                                background: selectedStock?.id === stock.id ? '#E3F2FD' : '#f9f9f9'
+                            }}
+                        >
+                            <div style={{ fontWeight: 'bold', fontSize: '14px' }}>{stock.name}</div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5px' }}>
+                                <span style={{ fontSize: '16px' }}>₹{stock.price}</span>
+                                <span style={{ fontSize: '12px', color: stock.trend === 'up' ? 'green' : stock.trend === 'down' ? 'red' : 'gray' }}>
+                                    {stock.trend === 'up' ? '▲' : stock.trend === 'down' ? '▼' : '➖'}
+                                </span>
+                            </div>
+                            <div style={{ fontSize: '10px', color: '#999', marginTop: '5px' }}>Owned: {portfolio[stock.id] || 0}</div>
                         </div>
-                        <div style={{ fontSize: '10px', color: '#999', marginTop: '5px' }}>Owned: {portfolio[stock.id] || 0}</div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
 
             {/* Trading Panel */}
