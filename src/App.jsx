@@ -27,33 +27,6 @@ const AppContent = () => {
         />
       )}
 
-      {/* Global Help FAB */}
-      {state.user && (
-        <button
-          onClick={() => navigate('/help')}
-          style={{
-            position: 'fixed',
-            bottom: '90px', // Above Navbar (approx 80px height)
-            right: '20px',
-            width: '50px',
-            height: '50px',
-            borderRadius: '50%',
-            backgroundColor: '#6C5CE7',
-            color: 'white',
-            border: 'none',
-            boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
-            fontSize: '24px',
-            cursor: 'pointer',
-            zIndex: 1000,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          ❓
-        </button>
-      )}
-
       <Routes>
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />

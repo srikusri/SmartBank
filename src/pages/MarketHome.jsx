@@ -51,15 +51,7 @@ const MarketHome = () => {
     return (
         <div style={{ padding: '20px', paddingBottom: '80px', background: 'var(--bg-app)', minHeight: '100vh' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <h1 style={{ margin: 0, color: 'var(--text-primary)' }}>🏙️ Marketopolis</h1>
-                    <button
-                        onClick={() => setShowGuide(true)}
-                        style={{ background: '#E1BEE7', border: 'none', borderRadius: '50%', width: '30px', height: '30px', cursor: 'pointer', fontSize: '16px' }}
-                    >
-                        ❓
-                    </button>
-                </div>
+                <h1 style={{ margin: 0, color: 'var(--text-primary)' }}>🏙️ Marketopolis</h1>
                 <div style={{ textAlign: 'right' }}>
                     <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Day {day}</div>
                     <div style={{ fontWeight: 'bold', color: '#673AB7' }}>{buildPoints} BP</div>
