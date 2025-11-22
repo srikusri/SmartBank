@@ -128,6 +128,57 @@ const MarketHome = () => {
                 </div>
             </div>
 
+            {/* Portfolio Table */}
+            <h3 style={{ marginBottom: '10px' }}>💼 My Portfolio</h3>
+            <div style={{ background: 'white', padding: '15px', borderRadius: '15px', marginBottom: '20px', boxShadow: '0 2px 10px rgba(0,0,0,0.05)', overflowX: 'auto' }}>
+                {Object.keys(portfolio).length === 0 || Object.values(portfolio).every(q => q === 0) ? (
+                    <div style={{ textAlign: 'center', color: '#636e72', padding: '20px' }}>
+                        No stocks owned yet. Buy some from the ticker above!
+                    </div>
+                ) : (
+                    <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '300px' }}>
+                        <thead>
+                            <tr style={{ borderBottom: '2px solid #f1f2f6', textAlign: 'left' }}>
+                                <th style={{ padding: '10px', color: '#636e72' }}>Stock</th>
+                                <th style={{ padding: '10px', color: '#636e72' }}>Qty</th>
+                                <th style={{ padding: '10px', color: '#636e72' }}>Value</th>
+                                <th style={{ padding: '10px', color: '#636e72', textAlign: 'center' }}>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {stocks.map(stock => {
+                                const quantity = portfolio[stock.id] || 0;
+                                if (quantity === 0) return null;
+                                return (
+                                    <tr key={stock.id} style={{ borderBottom: '1px solid #f1f2f6' }}>
+                                        <td style={{ padding: '10px', fontWeight: 'bold' }}>
+                                            {stock.name}
+                                            {stock.type === 'commodity' && ' ✨'}
+                                        </td>
+                                        <td style={{ padding: '10px' }}>{quantity}</td>
+                                        <td style={{ padding: '10px' }}>₹{stock.price * quantity}</td>
+                                        <td style={{ padding: '10px', textAlign: 'center' }}>
+                                            <button
+                                                onClick={() => setSelectedStock(stock)}
+                                                style={{ marginRight: '5px', padding: '5px 10px', background: '#4CAF50', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+                                            >
+                                                Buy
+                                            </button>
+                                            <button
+                                                onClick={() => setSelectedStock(stock)}
+                                                style={{ padding: '5px 10px', background: '#F44336', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+                                            >
+                                                Sell
+                                            </button>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                )}
+            </div>
+
             {/* City Builder */}
             <h3 style={{ marginBottom: '10px' }}>🏗️ City Builder (Level {cityLevel})</h3>
             <div style={{ background: 'var(--bg-card)', padding: '15px', borderRadius: '15px', marginBottom: '20px', boxShadow: `0 4px 10px var(--shadow-color)` }}>
