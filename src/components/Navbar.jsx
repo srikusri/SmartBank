@@ -12,6 +12,7 @@ const Navbar = () => {
         { path: '/wallet', label: 'Wallet', icon: '💸' },
         { path: '/passbook', label: 'Passbook', icon: '📒' },
         { path: '/learn', label: 'Learn', icon: '🎓' },
+        { path: '/help', label: 'Help', icon: '❓' },
     ];
 
     return (

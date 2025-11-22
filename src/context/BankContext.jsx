@@ -28,7 +28,9 @@ const INITIAL_STATE = {
     pin: null, // 4-digit PIN for transactions
     loans: [], // { id, amount, interestRate, dueDate, isPaid }
     subscriptions: [], // { id, name, amount, frequency, nextPaymentDate }
-    savingsGoals: [] // { id, name, targetAmount, currentAmount, icon }
+    subscriptions: [], // { id, name, amount, frequency, nextPaymentDate }
+    savingsGoals: [], // { id, name, targetAmount, currentAmount, icon }
+    hasSeenHelp: false // Track if user has seen the first-time help carousel
 };
 
 export const BankProvider = ({ children }) => {
@@ -277,10 +279,14 @@ export const BankProvider = ({ children }) => {
         });
     };
 
+    const markHelpAsSeen = () => {
+        setState(prev => ({ ...prev, hasSeenHelp: true }));
+    };
+
     return (
         <BankContext.Provider value={{
             state, login, updateBalance, depositToSavings, withdrawFromSavings, createFD, redeemFD, resetApp, loading, setWalletPin, verifyWalletPin,
-            takeLoan, repayLoan, addSubscription, paySubscription, createSavingsGoal, contributeToGoal
+            takeLoan, repayLoan, addSubscription, paySubscription, createSavingsGoal, contributeToGoal, markHelpAsSeen
         }}>
             {children}
         </BankContext.Provider>

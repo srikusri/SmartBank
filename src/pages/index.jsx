@@ -7,3 +7,4 @@ export { default as Wallet } from './Wallet';
 export { default as Passbook } from './Passbook';
 export { default as Learn } from './Learn';
 export { default as MarketHome } from './MarketHome';
+export { default as Help } from './Help';

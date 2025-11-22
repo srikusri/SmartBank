@@ -2,7 +2,7 @@ import React from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { BankProvider, useBank } from './context/BankContext';
 import { MarketProvider } from './context/MarketContext';
-import { Onboarding, Home, Earn, Save, Spend, Wallet, Learn, Passbook, MarketHome } from './pages';
+import { Onboarding, Home, Earn, Save, Spend, Wallet, Learn, Passbook, MarketHome, Help } from './pages';
 import Navbar from './components/Navbar';
 
 const ProtectedRoute = ({ children }) => {
@@ -13,11 +13,18 @@ const ProtectedRoute = ({ children }) => {
 };
 
 import SplashScreen from './components/SplashScreen';
+import HelpCarousel from './components/HelpCarousel';
 
 const AppContent = () => {
-  const { state } = useBank(); // Moved useBank hook here to access state for Navbar
+  const { state, markHelpAsSeen } = useBank(); // Moved useBank hook here to access state for Navbar
   return (
     <div className="app-container">
+      {state.user && !state.hasSeenHelp && (
+        <HelpCarousel
+          onComplete={markHelpAsSeen}
+          onClose={markHelpAsSeen}
+        />
+      )}
       <Routes>
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
@@ -28,6 +35,7 @@ const AppContent = () => {
         <Route path="/passbook" element={<ProtectedRoute><Passbook /></ProtectedRoute>} />
         <Route path="/learn" element={<ProtectedRoute><Learn /></ProtectedRoute>} />
         <Route path="/market" element={<ProtectedRoute><MarketHome /></ProtectedRoute>} />
+        <Route path="/help" element={<ProtectedRoute><Help /></ProtectedRoute>} />
       </Routes>
       {state.user && <Navbar />}
     </div>
