@@ -166,7 +166,6 @@ const Help = () => {
               'Scan your friend\'s QR code.',
               'Enter your Secret Key (PIN) to confirm.'
             ],
-            placeholder: 'Screenshot of Wallet Scan Screen'
           },
           {
             title: 'How to Buy Stocks 📈',
@@ -176,7 +175,6 @@ const Help = () => {
               'Enter the number of shares you want.',
               'Click "Buy"!'
             ],
-            placeholder: 'Screenshot of Stock Trading Panel'
           },
           {
             title: 'How to Set a Savings Goal 🎯',
@@ -186,7 +184,6 @@ const Help = () => {
               'Choose an icon and give it a name (e.g., "New Bike").',
               'Set the amount you need to save.'
             ],
-            placeholder: 'Screenshot of Create Goal Screen'
           }
         ].map((guide, index) => (
           <div key={index} style={{ background: 'white', padding: '20px', borderRadius: '15px', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
@@ -198,21 +195,6 @@ const Help = () => {
                     <li key={i}>{step}</li>
                   ))}
                 </ol>
-              </div>
-              <div style={{
-                flex: 1,
-                minWidth: '250px',
-                height: '150px',
-                background: '#f1f2f6',
-                borderRadius: '10px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                border: '2px dashed #b2bec3',
-                color: '#636e72',
-                fontSize: '0.9rem'
-              }}>
-                📷 {guide.placeholder}
               </div>
             </div>
           </div>
