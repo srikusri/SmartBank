@@ -11,6 +11,21 @@ const MarketHome = () => {
     const { day, buildPoints, cityLevel, news, portfolio } = gameState;
     const [selectedStock, setSelectedStock] = useState(null);
     const [qty, setQty] = useState(1);
+    const [showGuide, setShowGuide] = useState(false);
+
+    // Dynamic Hint Logic
+    let hint = "💡 Tip: Buy stocks low and sell high!";
+    const totalOwned = Object.values(portfolio).reduce((a, b) => a + b, 0);
+
+    if (totalOwned === 0) {
+        hint = "💡 Start by clicking on a stock to buy shares!";
+    } else if (buildPoints >= 50 && gameState.unlockedBuildings.length === 0) {
+        hint = "🏗️ You have enough Build Points! Scroll down to build your first building.";
+    } else if (news.effect.includes('+')) {
+        hint = "📈 Good news! Check the green stocks for profits.";
+    } else if (news.effect.includes('-')) {
+        hint = "📉 Market is down. Good time to buy cheap stocks?";
+    }
 
     const handleBuy = () => {
         if (buyStock(selectedStock.id, parseInt(qty), bankState.balance, updateBalance)) {
@@ -35,12 +50,35 @@ const MarketHome = () => {
 
     return (
         <div style={{ padding: '20px', paddingBottom: '80px', background: 'var(--bg-app)', minHeight: '100vh' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                <h1 style={{ margin: 0, color: 'var(--text-primary)' }}>🏙️ Marketopolis</h1>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <h1 style={{ margin: 0, color: 'var(--text-primary)' }}>🏙️ Marketopolis</h1>
+                    <button
+                        onClick={() => setShowGuide(true)}
+                        style={{ background: '#E1BEE7', border: 'none', borderRadius: '50%', width: '30px', height: '30px', cursor: 'pointer', fontSize: '16px' }}
+                    >
+                        ❓
+                    </button>
+                </div>
                 <div style={{ textAlign: 'right' }}>
                     <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>Day {day}</div>
                     <div style={{ fontWeight: 'bold', color: '#673AB7' }}>{buildPoints} BP</div>
                 </div>
+            </div>
+
+            {/* Dynamic Hint Bar */}
+            <div style={{
+                background: '#FFF9C4',
+                padding: '10px',
+                borderRadius: '10px',
+                marginBottom: '20px',
+                borderLeft: '5px solid #FBC02D',
+                fontSize: '14px',
+                color: '#F57F17',
+                fontWeight: 'bold',
+                animation: 'fadeIn 0.5s'
+            }}>
+                {hint}
             </div>
 
             {/* Stock Market Ticker - Moved to Top */}
@@ -54,10 +92,14 @@ const MarketHome = () => {
                             className="ticker-item"
                             onClick={() => setSelectedStock(stock)}
                             style={{
-                                borderColor: selectedStock?.id === stock.id ? '#2196F3' : 'var(--border-color)',
-                                background: selectedStock?.id === stock.id ? '#E3F2FD' : 'var(--bg-card)'
+                                borderColor: selectedStock?.id === stock.id ? '#2196F3' : (stock.type === 'commodity' ? '#FFD700' : (news.impacts[stock.id] ? '#FF9800' : 'var(--border-color)')),
+                                background: selectedStock?.id === stock.id ? '#E3F2FD' : (stock.type === 'commodity' ? '#FFFDE7' : (news.impacts[stock.id] ? '#FFF3E0' : 'var(--bg-card)')),
+                                borderWidth: stock.type === 'commodity' || news.impacts[stock.id] ? '2px' : '1px',
+                                boxShadow: stock.type === 'commodity' ? '0 0 10px rgba(255, 215, 0, 0.3)' : 'none'
                             }}
                         >
+                            {stock.type === 'commodity' && <div style={{ fontSize: '10px', color: '#FBC02D', marginBottom: '2px' }}>✨ Safe Haven</div>}
+                            {news.impacts[stock.id] && <div style={{ fontSize: '10px', color: '#EF6C00', marginBottom: '2px' }}>⚡ News Impact</div>}
                             <div style={{ fontWeight: 'bold', fontSize: '14px' }}>{stock.name}</div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5px' }}>
                                 <span style={{ fontSize: '16px' }}>₹{stock.price}</span>
@@ -182,6 +224,30 @@ const MarketHome = () => {
             </button>
 
             <Navbar />
+
+            {/* Guide Modal */}
+            {showGuide && (
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.8)', zIndex: 2000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
+                    <div style={{ background: 'white', padding: '20px', borderRadius: '20px', maxWidth: '500px', width: '100%', maxHeight: '80vh', overflowY: 'auto' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                            <h2 style={{ margin: 0 }}>How to Play 🎮</h2>
+                            <button onClick={() => setShowGuide(false)} style={{ background: 'none', border: 'none', fontSize: '24px' }}>✕</button>
+                        </div>
+                        <p><strong>Goal:</strong> Build the ultimate city by earning Build Points (BP)!</p>
+                        <ul style={{ paddingLeft: '20px', lineHeight: '1.6' }}>
+                            <li><strong>Buy Stocks:</strong> Use your bank money (₹) to buy stocks.</li>
+                            <li><strong>Watch News:</strong> News events change stock prices every day.</li>
+                            <li><strong>Sell for Profit:</strong> Sell stocks when price goes UP.</li>
+                            <li><strong>Earn BP:</strong> 10% of your sale value becomes Build Points.</li>
+                            <li><strong>Build City:</strong> Use BP to unlock buildings and level up!</li>
+                        </ul>
+                        <div style={{ background: '#E3F2FD', padding: '10px', borderRadius: '10px', marginTop: '20px' }}>
+                            <strong>Strategy:</strong> Diversify! Don't put all your money in one stock.
+                        </div>
+                        <button onClick={() => setShowGuide(false)} style={{ width: '100%', padding: '15px', background: '#673AB7', color: 'white', border: 'none', borderRadius: '10px', marginTop: '20px', fontWeight: 'bold' }}>Got it!</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

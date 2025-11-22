@@ -9,7 +9,9 @@ const INITIAL_STOCKS = [
     { id: 'mango', name: 'MangoFizz', price: 20, description: 'Delicious mango soda', trend: 'down' },
     { id: 'sky', name: 'SkySend', price: 120, description: 'Drone delivery service', trend: 'stable' },
     { id: 'giga', name: 'GigaGames', price: 60, description: 'Video game creators', trend: 'up' },
+    { id: 'giga', name: 'GigaGames', price: 60, description: 'Video game creators', trend: 'up' },
     { id: 'farm', name: 'GreenLeaf', price: 40, description: 'Organic farm produce', trend: 'stable' },
+    { id: 'gold', name: 'Digital Gold', price: 5000, description: 'Safe haven asset', trend: 'stable', type: 'commodity' },
 ];
 
 const BUILDINGS = [
@@ -152,9 +154,10 @@ export const MarketProvider = ({ children }) => {
         if (randomEventChance > 0.7) { // 30% chance of a random event
             const eventTypes = [
                 { title: "Tech Boom", effect: "Tech stocks +5%", impacts: { robo: 0.05, giga: 0.05, sky: 0.05 } },
-                { title: "Market Crash", effect: "All stocks -10%", impacts: { all: -0.10 } },
+                { title: "Market Crash", effect: "Stocks -10%, Gold +5%", impacts: { all: -0.10, gold: 0.15 } }, // Gold goes up (net +5%) when market crashes
                 { title: "Bumper Harvest", effect: "GreenLeaf +15%", impacts: { farm: 0.15 } },
-                { title: "Regulatory Crackdown", effect: "SkySend -12%", impacts: { sky: -0.12 } }
+                { title: "Regulatory Crackdown", effect: "SkySend -12%", impacts: { sky: -0.12 } },
+                { title: "Gold Rush", effect: "Gold +8%", impacts: { gold: 0.08 } }
             ];
             dynamicEvent = eventTypes[Math.floor(Math.random() * eventTypes.length)];
         }
@@ -180,7 +183,11 @@ export const MarketProvider = ({ children }) => {
 
             // Random fluctuation if no major news
             if (changePercent === 0) {
-                changePercent = (Math.random() * 10 - 5) / 100; // +/- 5%
+                if (stock.type === 'commodity') {
+                    changePercent = (Math.random() * 4 - 2) / 100; // Gold is more stable (+/- 2%)
+                } else {
+                    changePercent = (Math.random() * 10 - 5) / 100; // Stocks are volatile (+/- 5%)
+                }
             }
 
             const newPrice = Math.max(1, Math.round(stock.price * (1 + changePercent)));
